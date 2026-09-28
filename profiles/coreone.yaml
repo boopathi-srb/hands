@@ -43,12 +43,14 @@ outcomes:
     description: No member exists for the supplied number. A legitimate answer for the caller.
     when: {kind: text_visible, pattern: "No member found for number", case_sensitive: false}
     message_target: {description: Not-found message, candidates: [
-      {kind: role_name, role: text, name: No member found, exact: false, confidence: 0.8, reason: Product error text.}]}
+      {kind: role_name, role: cell, name: No member found, exact: false, confidence: 0.8, reason: Product error text in a layout cell.},
+      {kind: role_name, role: text, name: No member found, exact: false, confidence: 0.7, reason: Same text as a bare text node.}]}
   - code: MEMBER_RESTRICTED
     description: The member record is restricted for this operator. Permission denial, not a system failure.
     when: {kind: text_visible, pattern: "ACCESS DENIED"}
     message_target: {description: Access denied message, candidates: [
-      {kind: role_name, role: text, name: ACCESS DENIED, exact: false, confidence: 0.8, reason: Product error text.}]}
+      {kind: role_name, role: cell, name: ACCESS DENIED, exact: false, confidence: 0.8, reason: Product error text in a layout cell.},
+      {kind: role_name, role: text, name: ACCESS DENIED, exact: false, confidence: 0.7, reason: Same text as a bare text node.}]}
   - code: INVALID_MEMBER_NUMBER
     description: The application rejected the member number format.
     when: {kind: text_visible, pattern: "Member number must be numeric"}
@@ -76,9 +78,11 @@ recoveries:
     response: {kind: dismiss}
     max_applications: 3
   - name: transient_app_error
-    description: Generic internal error page; retry once after a short backoff.
+    description: >-
+      Generic internal error page. The page stays until something navigates, so waiting alone cannot clear it;
+      sign on again and re-run the flow from the start, once. A second occurrence is a hard failure.
     when: {kind: text_visible, pattern: "Internal Error. Reference ID"}
-    response: {kind: retry, backoff_ms: 1500}
+    response: {kind: subflow, subflow: login, then: restart}
     max_applications: 1
   - name: identity_verification
     description: Member identity challenge; no automated answer exists, a human must decide.

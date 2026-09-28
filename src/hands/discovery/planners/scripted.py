@@ -215,6 +215,10 @@ def coreone_member_balance_script(
         ScriptRule("enter_password", screen_has('textbox "Password"'),
                    type_into("textbox", "Password", "{{teller.password}}")),
         ScriptRule("sign_on", screen_has('button "Sign On"'), click("button", "Sign On")),
+        # Finish, then extract, before any navigation rule: the nav frame shows 'Member Inquiry' everywhere.
+        ScriptRule("done", extracted(output_name), done()),
+        ScriptRule("extract_balance", screen_has('"Member Detail"'),
+                   extract_near(wording.savings_name, wording.balance_offset, output_name)),
         ScriptRule("open_member_inquiry",
                    all_of(screen_has('link "Member Inquiry"'), screen_lacks(member_field)),
                    click("link", "Member Inquiry")),
@@ -222,8 +226,5 @@ def coreone_member_balance_script(
                    type_into("textbox", wording.member_label, "{{member_number}}")),
         ScriptRule("search", screen_has(f'button "{wording.search_button}"'),
                    click("button", wording.search_button)),
-        ScriptRule("extract_balance", screen_has('"Member Detail"'),
-                   extract_near(wording.savings_name, wording.balance_offset, output_name)),
-        ScriptRule("done", extracted(output_name), done()),
     ]
     return ScriptedPlanner(rules, name="scripted")
