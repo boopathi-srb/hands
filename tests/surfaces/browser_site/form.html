@@ -1,0 +1,20 @@
+<html><head><title>Member Inquiry</title></head>
+<body style="margin:8px">
+<table border="0" cellpadding="4">
+  <tr><td><font face="Arial"><b>Member Number</b></font></td>
+      <td><input type="text" name="member_number" onkeydown="if (event.key === 'Enter') { document.getElementById('result').textContent = 'Enter pressed'; }"></td></tr>
+  <tr><td>Share Type</td>
+      <td><select name="share_type" onchange="document.getElementById('status').textContent = 'Selected ' + this.value;">
+            <option>Regular Savings</option><option>Money Market</option><option>Share Certificate</option>
+          </select></td></tr>
+  <tr><td><label for="nickname">Nickname</label></td><td><input id="nickname" type="text"></td></tr>
+  <tr><td colspan="2">
+      <input type="button" value="Search" onclick="document.getElementById('result').textContent = 'Searched for ' + document.getElementsByName('member_number')[0].value;">
+      <button onclick="alert('Printer queue offline')">Show Alert</button>
+      <button onclick="document.getElementById('result').textContent = 'Confirm: ' + confirm('Proceed with transfer?');">Confirm</button>
+  </td></tr>
+</table>
+<div id="result"></div>
+<div id="status"></div>
+<p><font color="red">No member found for number <b>99999</b>.</font></p>
+</body></html>

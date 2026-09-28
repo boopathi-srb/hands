@@ -1,0 +1,14 @@
+<html><head><title>Notice</title></head>
+<body style="margin:8px">
+<table border="0" cellpadding="4">
+  <tr><td>Member Number</td><td><input type="text" name="member_number"></td></tr>
+  <tr><td>Status</td><td>Active</td></tr>
+  <tr><td colspan="2"><button>Search</button></td></tr>
+</table>
+<table id="notice" style="position:absolute; top:20px; left:40px; background:#ffffcc; border:2px solid #000" cellpadding="6">
+  <tr><td><b>System Notice</b></td></tr>
+  <tr><td>Scheduled maintenance tonight.</td></tr>
+  <tr><td><button onclick="document.getElementById('notice').style.display = 'none';">Acknowledge</button></td></tr>
+</table>
+<div role="dialog" aria-label="Verify Member Identity" style="margin-top:120px"><p>What is the member's pet's name?</p><button>Verify</button></div>
+</body></html>
