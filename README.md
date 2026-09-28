@@ -50,8 +50,16 @@ Members: `10001` and `10002` exist, `40300` is restricted, anything else is not 
 uv run hands discover "Look up member {{member_number}} in CoreOne and return the balance of their savings share as savings_balance." -i member_number=10001 --planner ollama
 ```
 
-Use `--planner anthropic` for Claude Sonnet 5, or `--planner scripted` to run offline. Add `--headed` to watch.
+This is the development planner: a local 8B model. For the production run on Claude Sonnet 5, set
+`ANTHROPIC_API_KEY` and record the model's responses so the run can be re-played offline:
+
+```bash
+uv run hands discover "Look up member {{member_number}} in CoreOne and return the balance of their savings share as savings_balance." -i member_number=10001 --planner anthropic --cassette cassettes/prod-sonnet-web.jsonl --cassette-mode record --evidence-root evidence/runs
+```
+
+`--planner scripted` runs offline with no model. Add `--headed` to watch the browser.
 The artifact is saved to `artifacts/coreone.member_balance/1.0.0.json` and evidence to `runs/<run_id>/`.
+A repo checkout already contains the artifact from the recorded Qwen run, so you can start at step 2.
 
 2. Replay it with different inputs, no model involved:
 
@@ -87,9 +95,16 @@ The last one re-signs-on and acknowledges the notice, then succeeds, with both r
 uv run hands replay coreone.member_balance -i member_number=10001 --fault identity_check:1 --headed
 ```
 
-The run pauses and logs an operator URL (http://127.0.0.1:8765). Open it, take control, answer the security
-question with `supervisor-override`, and hand back with "resume". The run continues on the same browser session
-and the human's actions are recorded in the evidence (typed text as length only).
+The run pauses and logs an operator URL (http://127.0.0.1:8765). Open it, enter an operator id, take control,
+click into the live view, answer the security question with `supervisor-override` (the mock app's test-only
+override), click Verify, and hand back with "resume". The run continues on the same browser session and returns
+the balance. The human's actions are in the evidence, with typed text recorded only as a length.
+
+To run the operator side without a person, in a second terminal (ids are printed by the paused run):
+
+```bash
+uv run python scripts/operator_handoff.py <intervention_id> <session_id>
+```
 
 5. Tenant variant: the same capability on a second institution running the same product:
 
@@ -123,6 +138,12 @@ uv run hands discover "Look up member {{member_number}} in CoreOne and return th
 ```bash
 uv run hands replay coreone.member_balance -i member_number=99999 --surface fake --escalation none
 ```
+
+## Evidence
+
+`scripts/replay_evidence.sh` replays the capability through every result class against the live mock app.
+See [evidence/README.md](evidence/README.md) for the recorded runs. `--trace` records a Playwright trace for local
+debugging only: traces contain unredacted typed input and must not be committed.
 
 ## Tests
 
