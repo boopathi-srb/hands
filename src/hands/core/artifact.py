@@ -229,6 +229,7 @@ class Capability(BaseModel):
         _check_placeholders_declared(self)
         _check_outputs_filled(self)
         _check_recovery_and_subflow_names(self)
+        _check_outcome_scopes(self)
         return self
 
 
@@ -276,6 +277,9 @@ def _check_outputs_filled(capability: Capability) -> None:
 
 def _check_recovery_and_subflow_names(capability: Capability) -> None:
     recovery_names = [rule.name for rule in capability.recoveries]
+    duplicate_names = sorted({name for name in recovery_names if recovery_names.count(name) > 1})
+    if duplicate_names:
+        raise ValueError(f"duplicate recovery rule names: {duplicate_names}")
     for step in iter_all_steps(capability):
         for name in step.recoveries:
             if name not in recovery_names:
@@ -285,6 +289,14 @@ def _check_recovery_and_subflow_names(capability: Capability) -> None:
     for rule in capability.recoveries:
         if isinstance(rule.response, SubflowResponse) and rule.response.subflow not in capability.subflows:
             raise ValueError(f"recovery '{rule.name}' references unknown subflow '{rule.response.subflow}'")
+
+
+def _check_outcome_scopes(capability: Capability) -> None:
+    step_ids = [step.id for step in iter_all_steps(capability)]
+    for detector in capability.outcomes:
+        unknown_ids = [step_id for step_id in detector.scope or [] if step_id not in step_ids]
+        if unknown_ids:
+            raise ValueError(f"outcome '{detector.code}' is scoped to unknown steps {unknown_ids}")
 
 
 # ---------------------------------------------------------------- tenant overlay (stored as a separate file)
