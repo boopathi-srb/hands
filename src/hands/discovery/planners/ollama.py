@@ -30,6 +30,8 @@ _logger = get_logger(__name__)
 
 DEFAULT_OLLAMA_MODEL = "qwen3-vl:8b"
 DEFAULT_OLLAMA_URL = "http://localhost:11434"
+# Ollama defaults to a 4k context on small GPUs; screen text + screenshot overflow it silently.
+DEFAULT_CONTEXT_TOKENS = 12_288
 CHAT_PATH = "/api/chat"
 
 
@@ -44,6 +46,7 @@ class OllamaPlanner:
         temperature: float = 0.0,
         timeout_s: float = 180.0,
         transport: httpx.AsyncBaseTransport | None = None,
+        context_tokens: int = DEFAULT_CONTEXT_TOKENS,
     ) -> None:
         self.model = model
         self.name = "ollama"
@@ -52,6 +55,7 @@ class OllamaPlanner:
         self._temperature = temperature
         self._timeout_s = timeout_s
         self._transport = transport
+        self._context_tokens = context_tokens
 
     async def decide(self, context: PlannerContext) -> PlannerResponse:
         request_body = self.build_request(context)
@@ -73,7 +77,8 @@ class OllamaPlanner:
             "stream": False,
             "think": self._think,
             "format": decision_json_schema(),
-            "options": {"temperature": self._temperature},
+            "options": {"temperature": self._temperature, "num_ctx": self._context_tokens},
+            "keep_alive": "30m",
         }
 
     async def _post_chat(self, request_body: dict[str, Any]) -> dict[str, Any] | str:

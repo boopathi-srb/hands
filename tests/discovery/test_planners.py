@@ -125,7 +125,7 @@ async def test_ollama_parses_content_and_sends_schema_and_image() -> None:
     assert response.usage.input_tokens == 120 and response.usage.output_tokens == 30
     assert captured["think"] is False and captured["stream"] is False
     assert captured["format"]["additionalProperties"] is False
-    assert captured["options"] == {"temperature": 0.0}
+    assert captured["options"] == {"temperature": 0.0, "num_ctx": 12_288}
     images = captured["messages"][1]["images"]
     assert len(images) == 1 and base64.b64decode(images[0]).startswith(b"\x89PNG")
     assert captured["messages"][0]["role"] == "system"
@@ -280,3 +280,13 @@ async def test_anthropic_api_errors_are_error_responses() -> None:
     )
     response = await AnthropicPlanner(client=FakeClient(status_error)).decide(planner_context(SCREEN))
     assert response.error is not None and "API error 500" in response.error
+
+
+def test_ollama_request_sets_context_window_and_keep_alive() -> None:
+    from hands.discovery.planners.ollama import DEFAULT_CONTEXT_TOKENS, OllamaPlanner
+
+    default_body = OllamaPlanner().build_request(_context_with_screenshot())
+    custom_body = OllamaPlanner(context_tokens=8192).build_request(_context_with_screenshot())
+    assert default_body["options"]["num_ctx"] == DEFAULT_CONTEXT_TOKENS
+    assert custom_body["options"]["num_ctx"] == 8192
+    assert default_body["keep_alive"] == "30m"
