@@ -1,0 +1,87 @@
+# Runtime knowledge for Northwind Core Systems "CoreOne" 7.x, shared by every tenant running it.
+# Tenant differences (labels, product names, URLs) belong in tenant overlays, not here.
+vendor: Northwind Core Systems
+product: CoreOne
+product_versions: ["7.4"]
+surface: web
+login_subflow: login
+
+credentials:
+  teller:
+    description: Back-office teller sign-on, resolved from the credential provider, never from the caller.
+    fields: [username, password]
+
+subflows:
+  login:
+    - id: login_open
+      action: open
+      description: Open the sign-on page.
+      entry_point: http://127.0.0.1:8700/t/lakeside/login
+      postcondition: {kind: node_present, target: {description: User ID field, candidates: [
+        {kind: label, label: User ID, role: textbox, confidence: 0.85, reason: Sign-on form label is product text.}]}}
+    - id: login_user
+      action: type
+      description: Enter the teller user id.
+      value: "{{teller.username}}"
+      target: {description: User ID field, candidates: [
+        {kind: label, label: User ID, role: textbox, confidence: 0.85, reason: Sign-on form label is product text.}]}
+    - id: login_password
+      action: type
+      description: Enter the teller password.
+      value: "{{teller.password}}"
+      target: {description: Password field, candidates: [
+        {kind: label, label: Password, role: textbox, confidence: 0.85, reason: Sign-on form label is product text.}]}
+    - id: login_submit
+      action: click
+      description: Sign on.
+      target: {description: Sign On button, candidates: [
+        {kind: role_name, role: button, name: Sign On, confidence: 0.9, reason: Primary action label is product text.}]}
+      postcondition: {kind: text_visible, pattern: Signed on as}
+
+outcomes:
+  - code: MEMBER_NOT_FOUND
+    description: No member exists for the supplied number. A legitimate answer for the caller.
+    when: {kind: text_visible, pattern: "No member found for number", case_sensitive: false}
+    message_target: {description: Not-found message, candidates: [
+      {kind: role_name, role: text, name: No member found, exact: false, confidence: 0.8, reason: Product error text.}]}
+  - code: MEMBER_RESTRICTED
+    description: The member record is restricted for this operator. Permission denial, not a system failure.
+    when: {kind: text_visible, pattern: "ACCESS DENIED"}
+    message_target: {description: Access denied message, candidates: [
+      {kind: role_name, role: text, name: ACCESS DENIED, exact: false, confidence: 0.8, reason: Product error text.}]}
+  - code: INVALID_MEMBER_NUMBER
+    description: The application rejected the member number format.
+    when: {kind: text_visible, pattern: "Member number must be numeric"}
+  - code: INVALID_DEPOSIT
+    description: The application rejected the initial deposit amount.
+    when: {kind: text_visible, pattern: "Initial deposit must be a positive amount"}
+
+recoveries:
+  - name: session_expired
+    description: Session timed out; sign on again, then retry the interrupted step.
+    when: {kind: text_visible, pattern: "Your session has expired"}
+    response: {kind: subflow, subflow: login, then: restart}
+    max_applications: 1
+  - name: maintenance_notice
+    description: Informational system notice overlay; acknowledge it.
+    when: {kind: text_visible, pattern: "System Notice"}
+    response:
+      kind: dismiss
+      target: {description: Acknowledge button, candidates: [
+        {kind: role_name, role: button, name: Acknowledge, confidence: 0.9, reason: Notice button label is product text.}]}
+    max_applications: 2
+  - name: native_alert
+    description: Browser alert raised by the page; accept it.
+    when: {kind: dialog_open}
+    response: {kind: dismiss}
+    max_applications: 3
+  - name: transient_app_error
+    description: Generic internal error page; retry once after a short backoff.
+    when: {kind: text_visible, pattern: "Internal Error. Reference ID"}
+    response: {kind: retry, backoff_ms: 1500}
+    max_applications: 1
+  - name: identity_verification
+    description: Member identity challenge; no automated answer exists, a human must decide.
+    when: {kind: text_visible, pattern: "Verify Member Identity"}
+    response: {kind: escalate, reason: Member identity verification requires a human operator.}
+    max_applications: 1

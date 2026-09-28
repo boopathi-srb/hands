@@ -1,0 +1,37 @@
+<script language="JavaScript" type="text/javascript">
+<!--
+function coFindOverlay(el) {
+  while (el && !(el.className && String(el.className).indexOf('co-ovl') >= 0)) { el = el.parentNode; }
+  return el;
+}
+function coDismiss(el) {
+  var box = coFindOverlay(el);
+  if (box) { box.style.display = 'none'; }
+}
+function coShowMessage(box, text) {
+  var cell = box.getElementsByClassName('co-msg')[0];
+  cell.innerHTML = '';
+  var font = document.createElement('font');
+  font.setAttribute('face', 'Arial');
+  font.setAttribute('size', '2');
+  font.setAttribute('color', '#CC0000');
+  font.textContent = text;
+  cell.appendChild(font);
+}
+function coVerify(el) {
+  var box = coFindOverlay(el);
+  var answer = box.getElementsByTagName('input')[0].value;
+  var xhr = new XMLHttpRequest();
+  xhr.open('POST', '{{ base }}/identity/verify', true);
+  xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState !== 4) { return; }
+    var result = null;
+    try { result = JSON.parse(xhr.responseText); } catch (e) { result = null; }
+    if (result && result.verified) { box.style.display = 'none'; return; }
+    coShowMessage(box, result ? result.message : 'Verification service unavailable.');
+  };
+  xhr.send('SEC_ANS=' + encodeURIComponent(answer));
+}
+//-->
+</script>

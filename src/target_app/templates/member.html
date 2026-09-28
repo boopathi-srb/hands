@@ -1,0 +1,28 @@
+{% extends "_page.html" %}
+{% from "_macros.html" import title_bar, field_row, error_line %}
+{% block body %}
+{{ title_bar("Member Detail") }}
+<br>
+{% if lookup.status == "restricted" %}
+<table border="0" cellpadding="6" cellspacing="0"><tr><td>{{ error_line("ACCESS DENIED: Member record is restricted (code 403-R)") }}</td></tr></table>
+{% elif lookup.status == "not_found" %}
+<table border="0" cellpadding="6" cellspacing="0"><tr><td><font face="Arial" size="2" color="#FF0000">No member found for number {{ lookup.member_number }}.</font></td></tr></table>
+{% else %}
+<table border="0" cellpadding="3" cellspacing="0">
+{% call field_row(tenant.member_number_label) %}<font face="Arial" size="2"><b>{{ lookup.member.member_number }}</b></font>{% endcall %}
+{% call field_row("Name") %}<font face="Arial" size="2">{{ lookup.member.name }}</font>{% endcall %}
+{% call field_row("Status") %}<font face="Arial" size="2">{{ lookup.member.status }}</font>{% endcall %}
+</table>
+<br>
+<table border="0" cellpadding="3" cellspacing="0"><tr><td><font face="Arial" size="3"><b>Shares</b></font></td></tr></table>
+<table border="1" cellpadding="4" cellspacing="0" bordercolor="#999999">
+<tr bgcolor="#DDDDDD">{% for column in tenant.share_columns %}<td><font face="Arial" size="2"><b>{{ column.value }}</b></font></td>{% endfor %}</tr>
+{% for row in share_rows %}
+<tr>{% for cell in row %}{% set column = tenant.share_columns[loop.index0] %}<td{% if column.value in ("Balance", "Available") %} align="right"{% endif %}><font face="Courier New" size="2">{{ cell }}</font></td>{% endfor %}</tr>
+{% endfor %}
+</table>
+<br>
+&nbsp;<input type="button" value="Open Share Account" onclick="window.location.href='{{ base }}/member/{{ lookup.member.member_number }}/open-share'">
+{% endif %}
+&nbsp;<input type="button" value="New Inquiry" onclick="window.location.href='{{ base }}/inquiry'">
+{% endblock %}

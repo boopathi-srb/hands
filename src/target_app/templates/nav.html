@@ -1,0 +1,11 @@
+{% extends "_page.html" %}
+{% block body %}
+<table width="100%" border="0" cellpadding="5" cellspacing="0" bgcolor="#E8E8E8">
+<tr><td bgcolor="#999999"><font face="Arial" size="2" color="#FFFFFF"><b>Functions</b></font></td></tr>
+<tr><td><font face="Arial" size="2">&raquo; <a href="{{ base }}/inquiry" target="content" onmouseover="window.status='Member Inquiry'; return true" onmouseout="window.status=''; return true">Member Inquiry</a></font></td></tr>
+<tr><td><font face="Arial" size="2">&raquo; <a href="{{ base }}/inquiry?intent=open-share" target="content" onmouseover="window.status='Open Share Account'; return true" onmouseout="window.status=''; return true">Open Share Account</a></font></td></tr>
+<tr><td><font face="Arial" size="2">&raquo; <a href="{{ base }}/reports" target="content" onmouseover="window.status='Reports'; return true" onmouseout="window.status=''; return true">Reports</a></font></td></tr>
+<tr><td height="200">&nbsp;</td></tr>
+<tr><td><font face="Arial" size="1" color="#666666">{{ vendor_name }}</font></td></tr>
+</table>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends "_page.html" %}
+{% from "_macros.html" import title_bar, field_row, error_line %}
+{% block body %}
+{{ title_bar("Open Share Account") }}
+<br>
+<form method="post" action="{{ base }}/review">
+<input type="hidden" name="MBR_NO" value="{{ lookup.member.member_number }}">
+<table border="0" cellpadding="4" cellspacing="0">
+{% if error %}<tr><td colspan="2">{{ error_line(error) }}</td></tr>{% endif %}
+{% call field_row(tenant.member_number_label) %}<font face="Arial" size="2">{{ lookup.member.member_number }} &nbsp; {{ lookup.member.name }}</font>{% endcall %}
+{% call field_row("Share Type") %}<select name="SHR_TYPE">{% for option_value, option_label in product_options %}<option value="{{ option_value }}"{% if option_value == selected_product %} selected{% endif %}>{{ option_label }}</option>{% endfor %}</select>{% endcall %}
+{% call field_row("Initial Deposit") %}<input type="text" name="INIT_DEP" size="14" maxlength="15" value="{{ deposit_value }}">{% endcall %}
+{% call field_row("Nickname") %}<input type="text" name="NICK" size="24" maxlength="30" value="{{ nickname_value }}">{% endcall %}
+<tr><td>&nbsp;</td><td><input type="submit" value="Continue"></td></tr>
+</table>
+</form>
+{% endblock %}

@@ -20,7 +20,8 @@ from hands.core.conditions import Condition
 from hands.core.targets import TargetSpec
 
 SCHEMA_VERSION = "1.0"
-PLACEHOLDER_PATTERN = re.compile(r"\{\{\s*([a-zA-Z_][a-zA-Z0-9_]*)\s*\}\}")
+# `{{member_number}}` for caller inputs, `{{teller.password}}` for credential fields.
+PLACEHOLDER_PATTERN = re.compile(r"\{\{\s*([a-zA-Z_][a-zA-Z0-9_]*(?:\.[a-zA-Z_][a-zA-Z0-9_]*)?)\s*\}\}")
 SLUG_PATTERN = r"^[a-z][a-z0-9_.-]*$"
 SEMVER_PATTERN = r"^\d+\.\d+\.\d+$"
 
@@ -254,7 +255,7 @@ def _check_placeholders_declared(capability: Capability) -> None:
         f"{credential}.{field}" for credential, spec in capability.credentials.items() for field in spec.fields
     }
     serialized_parts = [step.model_dump_json() for step in iter_all_steps(capability)]
-    serialized_parts += [capability.checkpoint.model_dump_json() if hasattr(capability.checkpoint, "model_dump_json") else ""]
+    serialized_parts += [capability.checkpoint.model_dump_json()]
     serialized_parts += [detector.model_dump_json() for detector in capability.outcomes]
     serialized_parts += [rule.model_dump_json() for rule in capability.recoveries]
     for serialized in serialized_parts:

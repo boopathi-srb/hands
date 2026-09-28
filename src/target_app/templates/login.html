@@ -1,0 +1,21 @@
+{% extends "_page.html" %}
+{% block title %}{{ tenant.brand }} - Sign On{% endblock %}
+{% block body %}
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+<tr><td bgcolor="#003366" height="44">&nbsp;&nbsp;<font face="Arial" size="4" color="#FFFFFF"><b>{{ tenant.brand }}</b></font></td></tr>
+<tr><td bgcolor="#C0C0C0"><font face="Arial" size="1">&nbsp;&nbsp;{{ product_name }} Member Services {{ product_version }} &middot; {{ vendor_name }}</font></td></tr>
+</table>
+<br><br>
+<center>
+<form method="post" action="{{ base }}/login" target="_top">
+<table border="1" cellpadding="6" cellspacing="0" bgcolor="#EEEEEE" width="360">
+<tr><td bgcolor="#336699"><font face="Arial" size="2" color="#FFFFFF"><b>Teller Sign On</b></font></td></tr>
+{% if error %}<tr><td><font face="Arial" size="2" color="#CC0000"><b>{{ error }}</b></font></td></tr>{% endif %}
+<tr><td align="right" nowrap><label><font face="Arial" size="2">User ID</font>&nbsp;<input type="text" name="USERID" size="18" maxlength="16" value="{{ user_id or '' }}"></label></td></tr>
+<tr><td align="right" nowrap><label><font face="Arial" size="2">Password</font>&nbsp;<input type="password" name="PASSWD" size="18" maxlength="64"></label></td></tr>
+<tr><td align="center"><input type="submit" value="Sign On"></td></tr>
+</table>
+</form>
+<font face="Arial" size="1" color="#666666">Authorized personnel only. All activity is logged.</font>
+</center>
+{% endblock %}

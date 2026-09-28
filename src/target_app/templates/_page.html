@@ -1,0 +1,13 @@
+<html>
+<head>
+<title>{% block title %}{{ tenant.brand }} - {{ product_name }} {{ product_version }}{% endblock %}</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="Pragma" content="no-cache">
+{% if overlays.maintenance_notice or overlays.identity_check %}{% include "_overlay_script.html" %}{% endif %}
+</head>
+<body bgcolor="#FFFFFF" text="#000000" link="#003399" vlink="#003399" alink="#CC0000" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0"{% if overlays.native_alert %} onload='alert("Printer queue offline")'{% endif %}>
+{% block body %}{% endblock %}
+{% if overlays.identity_check %}{% include "_identity_check.html" %}{% endif %}
+{% if overlays.maintenance_notice %}{% include "_maintenance_notice.html" %}{% endif %}
+</body>
+</html>

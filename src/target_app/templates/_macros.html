@@ -1,0 +1,14 @@
+{% macro title_bar(text) -%}
+<table width="100%" border="0" cellpadding="3" cellspacing="0">
+<tr><td bgcolor="#336699"><font face="Arial" size="3" color="#FFFFFF"><b>&nbsp;{{ text }}</b></font></td></tr>
+<tr><td bgcolor="#C0C0C0" height="2"></td></tr>
+</table>
+{%- endmacro %}
+
+{% macro field_row(label) -%}
+<tr><td align="right" nowrap><font face="Arial" size="2">{{ label }}</font></td><td>{{ caller() }}</td></tr>
+{%- endmacro %}
+
+{% macro error_line(message) -%}
+<font face="Arial" size="2" color="#CC0000"><b>{{ message }}</b></font>
+{%- endmacro %}

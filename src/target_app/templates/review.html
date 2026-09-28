@@ -1,0 +1,24 @@
+{% extends "_page.html" %}
+{% from "_macros.html" import title_bar, field_row %}
+{% block body %}
+{{ title_bar("Confirm New Share") }}
+<br>
+<table border="0" cellpadding="3" cellspacing="0">
+{% call field_row(tenant.member_number_label) %}<font face="Arial" size="2">{{ draft.member.member_number }}</font>{% endcall %}
+{% call field_row("Member Name") %}<font face="Arial" size="2">{{ draft.member.name }}</font>{% endcall %}
+{% call field_row("Share Type") %}<font face="Arial" size="2">{{ product_label }}</font>{% endcall %}
+{% call field_row("Initial Deposit") %}<font face="Courier New" size="2">{{ deposit_display }}</font>{% endcall %}
+{% call field_row("Nickname") %}<font face="Arial" size="2">{{ draft.nickname or "(none)" }}</font>{% endcall %}
+</table>
+<br>
+<font face="Arial" size="2" color="#993300">&nbsp;Submitting opens the share and posts the initial deposit. This cannot be undone.</font>
+<form method="post" action="{{ base }}/submit">
+<input type="hidden" name="MBR_NO" value="{{ draft.member.member_number }}">
+<input type="hidden" name="SHR_TYPE" value="{{ draft.product.value }}">
+<input type="hidden" name="INIT_DEP" value="{{ deposit_raw }}">
+<input type="hidden" name="NICK" value="{{ draft.nickname }}">
+<table border="0" cellpadding="4" cellspacing="0">
+<tr><td><input type="submit" value="Submit"></td><td><input type="button" value="Cancel" onclick="window.location.href='{{ base }}/member/{{ draft.member.member_number }}'"></td></tr>
+</table>
+</form>
+{% endblock %}

@@ -1,0 +1,7 @@
+{% extends "_page.html" %}
+{% from "_macros.html" import title_bar %}
+{% block body %}
+{{ title_bar("Reports") }}
+<br>
+<font face="Arial" size="2">&nbsp;No reports are available for teller profile {{ session.user_id }}.</font>
+{% endblock %}

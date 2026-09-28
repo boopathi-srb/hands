@@ -1,0 +1,15 @@
+{% extends "_page.html" %}
+{% from "_macros.html" import title_bar, field_row %}
+{% block body %}
+{{ title_bar("Share Opened") }}
+<br>
+<table border="0" cellpadding="6" cellspacing="0"><tr><td><font face="Arial" size="2" color="#006600"><b>Share {{ new_share_id }} opened for member {{ draft.member.member_number }}.</b></font></td></tr></table>
+<table border="0" cellpadding="3" cellspacing="0">
+{% call field_row("Share Type") %}<font face="Arial" size="2">{{ product_label }}</font>{% endcall %}
+{% call field_row("Initial Deposit") %}<font face="Courier New" size="2">{{ deposit_display }}</font>{% endcall %}
+{% call field_row("Nickname") %}<font face="Arial" size="2">{{ draft.nickname or "(none)" }}</font>{% endcall %}
+</table>
+<br>
+&nbsp;<a href="{{ base }}/member/{{ draft.member.member_number }}"><font face="Arial" size="2">Return to Member</font></a>
+&nbsp;|&nbsp;<a href="{{ base }}/inquiry"><font face="Arial" size="2">New Inquiry</font></a>
+{% endblock %}

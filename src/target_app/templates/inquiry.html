@@ -1,0 +1,14 @@
+{% extends "_page.html" %}
+{% from "_macros.html" import title_bar, field_row, error_line %}
+{% block body %}
+{{ title_bar("Member Inquiry") }}
+<br>
+{% if intent == "open-share" %}<font face="Arial" size="2">&nbsp;Locate the member first, then choose Open Share Account on the member record.</font><br><br>{% endif %}
+<form method="post" action="{{ base }}/inquiry">
+<table border="0" cellpadding="4" cellspacing="0">
+{% if error %}<tr><td colspan="2">{{ error_line(error) }}</td></tr>{% endif %}
+{% call field_row(tenant.member_number_label) %}<input type="text" name="MBR_NO" size="14" maxlength="12" value="{{ member_number }}">{% endcall %}
+<tr><td>&nbsp;</td><td><input type="submit" value="{{ tenant.search_button_label }}"></td></tr>
+</table>
+</form>
+{% endblock %}
