@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>hands operator console</title>
+<style>
+  :root { --fg: #1d1f23; --muted: #5f6570; --line: #d5d8de; --bg: #f6f7f9; --panel: #fff;
+          --accent: #1f5fbf; --warn: #a24b00; --bad: #b3261e; --ok: #1e7a3c; }
+  * { box-sizing: border-box; }
+  body { margin: 0; font: 14px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif; color: var(--fg);
+         background: var(--bg); }
+  header { display: flex; gap: 16px; align-items: center; padding: 10px 16px; background: var(--panel);
+           border-bottom: 1px solid var(--line); flex-wrap: wrap; }
+  header h1 { font-size: 16px; margin: 0; }
+  main { display: grid; grid-template-columns: 300px 1fr; gap: 16px; padding: 16px; }
+  @media (max-width: 900px) { main { grid-template-columns: 1fr; } }
+  section { background: var(--panel); border: 1px solid var(--line); border-radius: 6px; padding: 12px; }
+  h2 { font-size: 13px; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); margin: 0 0 8px; }
+  ul.list { list-style: none; margin: 0; padding: 0; }
+  ul.list li { padding: 8px; border: 1px solid var(--line); border-radius: 4px; margin-bottom: 6px; cursor: pointer; }
+  ul.list li.selected { border-color: var(--accent); background: #eef3fb; }
+  .kind { font-weight: 600; color: var(--warn); }
+  dl { display: grid; grid-template-columns: 130px 1fr; gap: 4px 10px; margin: 0 0 12px; }
+  dt { color: var(--muted); } dd { margin: 0; word-break: break-word; }
+  .row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin: 8px 0; }
+  button { font: inherit; padding: 6px 12px; border-radius: 4px; border: 1px solid var(--accent);
+           background: var(--accent); color: #fff; cursor: pointer; }
+  button.secondary { background: #fff; color: var(--accent); }
+  button:disabled { opacity: .5; cursor: not-allowed; }
+  input, select, textarea { font: inherit; padding: 5px 8px; border: 1px solid var(--line); border-radius: 4px; }
+  textarea { width: 100%; min-height: 48px; }
+  #holder { font-weight: 600; }
+  #holder.human { color: var(--ok); } #holder.automation { color: var(--accent); } #holder.nobody { color: var(--warn); }
+  #screen { display: block; max-width: 100%; border: 1px solid var(--line); background: #222; outline: none; cursor: crosshair; }
+  #screen:focus { border-color: var(--accent); box-shadow: 0 0 0 2px #1f5fbf55; }
+  #shot { max-width: 100%; border: 1px solid var(--line); }
+  #status { color: var(--muted); }
+  #status.error { color: var(--bad); }
+  #actions { font-family: ui-monospace, Menlo, monospace; font-size: 12px; max-height: 160px; overflow: auto;
+             background: var(--bg); border: 1px solid var(--line); padding: 6px; margin: 0; }
+  .hidden { display: none; }
+  .empty { color: var(--muted); }
+</style>
+</head>
+<body>
+<header>
+  <h1>hands operator console</h1>
+  <label>Operator id <input id="operator" autocomplete="off" placeholder="e.g. alice"></label>
+  <span>Control: <span id="holder" class="nobody">-</span></span>
+  <span id="status">Loading interventions...</span>
+</header>
+<main>
+  <section>
+    <h2>Open interventions</h2>
+    <ul id="interventions" class="list"></ul>
+    <p id="no-interventions" class="empty hidden">No open interventions.</p>
+  </section>
+  <section id="detail" class="hidden">
+    <h2>Intervention</h2>
+    <dl id="context"></dl>
+    <div id="shot-wrap"><h2>Screenshot at escalation</h2><img id="shot" alt="screenshot at escalation"></div>
+    <div class="row">
+      <button id="take">Take control</button>
+      <span class="empty">Click the live view to focus it; clicks and keys go to the live session.</span>
+    </div>
+    <div id="live-wrap" class="hidden">
+      <h2>Live session</h2>
+      <canvas id="screen" tabindex="0" width="800" height="500"></canvas>
+      <h2>Captured actions (typed text is never stored)</h2>
+      <pre id="actions"></pre>
+    </div>
+    <h2>Hand back</h2>
+    <div class="row">
+      <select id="outcome">
+        <option value="resume">resume: automation continues this step</option>
+        <option value="step_completed_by_human">step_completed_by_human: I did this step</option>
+        <option value="abort">abort: stop the run</option>
+      </select>
+      <button id="handback" class="secondary">Hand back</button>
+    </div>
+    <textarea id="note" placeholder="Note for the run record (what you did and why)"></textarea>
+  </section>
+</main>
+<script>
+"use strict";
+const $ = (id) => document.getElementById(id);
+const state = { selectedId: new URLSearchParams(location.search).get("intervention"),
+                sessionId: null, socket: null, frameImage: new Image(), actions: [] };
+
+function setStatus(text, isError) {
+  $("status").textContent = text;
+  $("status").className = isError ? "error" : "";
+}
+
+function operatorId() {
+  const value = $("operator").value.trim();
+  try { localStorage.setItem("hands.operator", value); } catch (e) { /* storage unavailable */ }
+  return value;
+}
+
+function showHolder(lease) {
+  const holder = lease ? lease.holder : "-";
+  const who = lease && lease.holder_id ? " (" + lease.holder_id + ")" : "";
+  $("holder").textContent = holder + who;
+  $("holder").className = holder;
+}
+
+async function api(method, path, body) {
+  const options = { method, headers: { "content-type": "application/json" } };
+  if (body !== undefined) options.body = JSON.stringify(body);
+  const response = await fetch(path, options).catch(() => null);
+  if (response === null) return { ok: false, status: 0, payload: { message: "console unreachable" } };
+  const payload = await response.json().catch(() => ({}));
+  return { ok: response.ok, status: response.status, payload };
+}
+
+function renderList(interventions) {
+  const list = $("interventions");
+  list.replaceChildren();
+  $("no-interventions").classList.toggle("hidden", interventions.length > 0);
+  for (const item of interventions) {
+    const entry = document.createElement("li");
+    entry.classList.toggle("selected", item.intervention_id === state.selectedId);
+    const kind = document.createElement("div");
+    kind.className = "kind";
+    kind.textContent = item.kind + " - " + (item.capability_id || "discovery");
+    const reason = document.createElement("div");
+    reason.textContent = item.reason;
+    const when = document.createElement("div");
+    when.className = "empty";
+    when.textContent = "session " + item.session_id + ", " + new Date(item.created_at).toLocaleTimeString();
+    entry.append(kind, reason, when);
+    entry.addEventListener("click", () => selectIntervention(item.intervention_id));
+    list.append(entry);
+  }
+}
+
+function renderContext(context) {
+  const request = context.request;
+  const fields = [["Kind", request.kind], ["Reason", request.reason], ["Mode", request.mode],
+    ["Goal", request.goal], ["Capability", request.capability_id], ["Step", request.step_id],
+    ["Step description", request.step_description], ["Location", request.location],
+    ["Run", request.run_id], ["Session", request.session_id], ["Status", context.status]];
+  const list = $("context");
+  list.replaceChildren();
+  for (const [label, value] of fields) {
+    if (value === null || value === undefined || value === "") continue;
+    const term = document.createElement("dt");
+    term.textContent = label;
+    const detail = document.createElement("dd");
+    detail.textContent = value;
+    list.append(term, detail);
+  }
+  $("shot-wrap").classList.toggle("hidden", !context.screenshot_data_url || state.socket !== null);
+  if (context.screenshot_data_url) $("shot").src = context.screenshot_data_url;
+  state.sessionId = request.session_id;
+  showHolder(context.lease);
+}
+
+async function refreshList() {
+  const result = await api("GET", "/api/interventions");
+  if (!result.ok) { setStatus("Could not load interventions (" + result.status + ")", true); return; }
+  const interventions = result.payload.interventions || [];
+  if (!state.selectedId && interventions.length > 0) state.selectedId = interventions[0].intervention_id;
+  renderList(interventions);
+  if (!state.socket) setStatus(interventions.length + " open intervention(s)");
+  if (state.selectedId) await refreshContext();
+  else await refreshHolder();
+}
+
+async function refreshHolder() {
+  if (!state.sessionId) return;
+  const result = await api("GET", "/api/sessions/" + encodeURIComponent(state.sessionId) + "/lease");
+  if (result.ok) showHolder(result.payload.lease);
+}
+
+async function refreshContext() {
+  const result = await api("GET", "/api/interventions/" + encodeURIComponent(state.selectedId));
+  if (!result.ok) { state.selectedId = null; $("detail").classList.add("hidden"); return; }
+  $("detail").classList.remove("hidden");
+  renderContext(result.payload);
+}
+
+async function selectIntervention(interventionId) {
+  state.selectedId = interventionId;
+  await refreshList();
+}
+
+async function takeControl() {
+  const operator = operatorId();
+  if (!operator) { setStatus("Enter your operator id first.", true); return; }
+  const result = await api("POST", "/api/interventions/" + encodeURIComponent(state.selectedId) + "/take",
+                           { operator_id: operator });
+  if (!result.ok) { setStatus("Take control refused: " + (result.payload.message || result.status), true); return; }
+  showHolder(result.payload.lease);
+  openLive(result.payload.live_path, operator);
+}
+
+function openLive(livePath, operator) {
+  const scheme = location.protocol === "https:" ? "wss" : "ws";
+  const url = scheme + "://" + location.host + livePath + "?operator_id=" + encodeURIComponent(operator);
+  const socket = new WebSocket(url);
+  state.socket = socket;
+  state.actions = [];
+  $("actions").textContent = "";
+  $("live-wrap").classList.remove("hidden");
+  $("shot-wrap").classList.add("hidden");
+  socket.onmessage = (message) => handleServerMessage(JSON.parse(message.data));
+  socket.onclose = () => { state.socket = null; setStatus("Live view closed."); refreshList(); };
+  socket.onopen = () => { setStatus("You are in control. Hand back when done."); $("screen").focus(); };
+}
+
+function handleServerMessage(message) {
+  if (message.type === "frame") drawFrame(message);
+  else if (message.type === "connected") showHolder(message.lease);
+  else if (message.type === "input_accepted" && message.action) logAction(message.action);
+  else if (message.type === "input_rejected") setStatus("Input rejected: " + message.message, true);
+  else if (message.type === "control_lost") { showHolder(message.lease); setStatus("Control returned."); }
+  else if (message.type === "error") setStatus("Live view refused: " + message.message, true);
+}
+
+function drawFrame(message) {
+  state.frameImage.onload = () => {
+    const canvas = $("screen");
+    if (canvas.width !== state.frameImage.naturalWidth) canvas.width = state.frameImage.naturalWidth;
+    if (canvas.height !== state.frameImage.naturalHeight) canvas.height = state.frameImage.naturalHeight;
+    canvas.getContext("2d").drawImage(state.frameImage, 0, 0);
+  };
+  state.frameImage.src = "data:" + message.mime + ";base64," + message.data;
+}
+
+function describeAction(action) {
+  const target = action.node_role ? " " + action.node_role + " '" + (action.node_name || "") + "'" : "";
+  const detail = action.kind === "type" ? " (" + action.text_length + " chars)"
+               : action.kind === "press" ? " " + action.key : "";
+  return action.kind + detail + target;
+}
+
+function logAction(action) {
+  const previous = state.actions[state.actions.length - 1];
+  const sameField = previous && previous.kind === "type" && action.kind === "type"
+    && previous.node_role === action.node_role && previous.node_name === action.node_name;
+  if (sameField) previous.text_length += action.text_length;
+  else state.actions.push(Object.assign({}, action));
+  $("actions").textContent = state.actions.map(describeAction).join("\n");
+  $("actions").scrollTop = $("actions").scrollHeight;
+}
+
+function send(kind, event) {
+  if (!state.socket || state.socket.readyState !== WebSocket.OPEN) return;
+  state.socket.send(JSON.stringify({ kind, event }));
+}
+
+function framePoint(mouseEvent) {
+  const canvas = $("screen");
+  const box = canvas.getBoundingClientRect();
+  return { x: (mouseEvent.clientX - box.left) * (canvas.width / box.width),
+           y: (mouseEvent.clientY - box.top) * (canvas.height / box.height) };
+}
+
+function isPrintable(keyEvent) {
+  return keyEvent.key.length === 1 && !keyEvent.ctrlKey && !keyEvent.metaKey && !keyEvent.altKey;
+}
+
+function wireCanvas() {
+  const canvas = $("screen");
+  canvas.addEventListener("click", (event) => {
+    canvas.focus();
+    const point = framePoint(event);
+    send("pointer", { type: "click", x: point.x, y: point.y, button: "left" });
+  });
+  canvas.addEventListener("wheel", (event) => {
+    event.preventDefault();
+    const point = framePoint(event);
+    send("pointer", { type: "wheel", x: point.x, y: point.y, button: "none", delta_y: event.deltaY });
+  }, { passive: false });
+  canvas.addEventListener("keydown", (event) => {
+    event.preventDefault();
+    if (isPrintable(event)) send("key", { type: "char", key: event.key, text: event.key });
+    else send("key", { type: "down", key: event.key });
+  });
+  canvas.addEventListener("keyup", (event) => {
+    event.preventDefault();
+    if (!isPrintable(event)) send("key", { type: "up", key: event.key });
+  });
+}
+
+async function handBack() {
+  const operator = operatorId();
+  if (!operator) { setStatus("Enter your operator id first.", true); return; }
+  const body = { operator_id: operator, outcome: $("outcome").value, note: $("note").value };
+  const result = await api("POST", "/api/interventions/" + encodeURIComponent(state.selectedId) + "/handback", body);
+  if (!result.ok) { setStatus("Hand back refused: " + (result.payload.message || result.status), true); return; }
+  showHolder(result.payload.lease);
+  setStatus("Handed back with outcome " + body.outcome + ".");
+  if (state.socket) state.socket.close();
+  $("live-wrap").classList.add("hidden");
+  $("note").value = "";
+  state.selectedId = null;
+  $("detail").classList.add("hidden");
+  await refreshList();
+}
+
+function init() {
+  try { $("operator").value = localStorage.getItem("hands.operator") || ""; } catch (e) { /* storage unavailable */ }
+  $("take").addEventListener("click", takeControl);
+  $("handback").addEventListener("click", handBack);
+  wireCanvas();
+  refreshList();
+  setInterval(() => { if (!state.socket) refreshList(); }, 2000);
+}
+
+init();
+</script>
+</body>
+</html>
