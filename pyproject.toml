@@ -50,3 +50,7 @@ target-version = "py311"
 [tool.mypy]
 python_version = "3.11"
 strict = true
+
+[tool.ruff.lint.per-file-ignores]
+# Typer declares options as call defaults by design.
+"src/hands/cli.py" = ["B008"]

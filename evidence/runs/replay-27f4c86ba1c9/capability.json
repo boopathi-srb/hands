@@ -1,0 +1,554 @@
+{
+  "schema_version": "1.0",
+  "id": "coreone.member_balance",
+  "version": "1.0.0",
+  "status": "draft",
+  "title": "Member savings balance",
+  "description": "Look up a member by member number and return the balance of their savings share.",
+  "app": {
+    "vendor": "Northwind Core Systems",
+    "product": "CoreOne",
+    "product_version": "7.4",
+    "surface": "web"
+  },
+  "inputs": {
+    "member_number": {
+      "type": "string",
+      "description": "The member number to use.",
+      "required": true,
+      "sensitive": false,
+      "pattern": "^\\d+$",
+      "example": "10001"
+    }
+  },
+  "outputs": {
+    "savings_balance": {
+      "type": "decimal",
+      "description": "Read from savings balance value during discovery.",
+      "sensitive": false
+    }
+  },
+  "credentials": {
+    "teller": {
+      "description": "Back-office teller sign-on, resolved from the credential provider, never from the caller.",
+      "fields": [
+        "username",
+        "password"
+      ]
+    }
+  },
+  "steps": [
+    {
+      "id": "sign_on",
+      "description": "Sign on with the 'login' subflow from the app profile.",
+      "risk": "safe",
+      "precondition": null,
+      "postcondition": {
+        "kind": "location_matches",
+        "pattern": "/t/:tenant/main",
+        "title_pattern": null
+      },
+      "timeout_ms": 10000,
+      "recoveries": [],
+      "action": "subflow",
+      "subflow": "login"
+    },
+    {
+      "id": "type_member_number_textbox",
+      "description": "Enter {{member_number}} into Member Number textbox.",
+      "risk": "safe",
+      "precondition": null,
+      "postcondition": null,
+      "timeout_ms": 10000,
+      "recoveries": [],
+      "action": "type",
+      "target": {
+        "description": "Member Number textbox",
+        "candidates": [
+          {
+            "confidence": 0.85,
+            "reason": "The textbox identified by its associated label 'Member Number', which users read to find this field.",
+            "kind": "label",
+            "label": "Member Number",
+            "role": "textbox"
+          },
+          {
+            "confidence": 0.7,
+            "reason": "The nearest textbox right of the stable text 'Member Number', which identifies this row or column even when values change.",
+            "kind": "text_anchor",
+            "anchor_text": "Member Number",
+            "relation": "right_of",
+            "role": "textbox",
+            "ordinal": 0
+          },
+          {
+            "confidence": 0.5,
+            "reason": "Position 'form[1]/table[1]/row[1]/cell[2]/textbox[1]' in frame:content; stable while this legacy layout is unchanged.",
+            "kind": "structural",
+            "container_path": [
+              "frame:content"
+            ],
+            "structural_path": "form[1]/table[1]/row[1]/cell[2]/textbox[1]"
+          },
+          {
+            "confidence": 0.3,
+            "reason": "Last resort: a fixed offset from the unique text 'Member Number', for when the a11y tree fails.",
+            "kind": "visual_anchor",
+            "anchor_text": "Member Number",
+            "dx": 112.3,
+            "dy": 0.0
+          }
+        ]
+      },
+      "value": "{{member_number}}",
+      "clear_first": true
+    },
+    {
+      "id": "click_search_button",
+      "description": "Click Search button.",
+      "risk": "safe",
+      "precondition": null,
+      "postcondition": {
+        "kind": "text_visible",
+        "pattern": "Member Detail",
+        "regex": false,
+        "case_sensitive": false
+      },
+      "timeout_ms": 10000,
+      "recoveries": [],
+      "action": "click",
+      "target": {
+        "description": "Search button",
+        "candidates": [
+          {
+            "confidence": 0.9,
+            "reason": "The only button named 'Search' on this screen; role and name survive layout changes.",
+            "kind": "role_name",
+            "role": "button",
+            "name": "Search",
+            "exact": true
+          },
+          {
+            "confidence": 0.7,
+            "reason": "The nearest button below the stable text 'Member Inquiry', which identifies this row or column even when values change.",
+            "kind": "text_anchor",
+            "anchor_text": "Member Inquiry",
+            "relation": "below",
+            "role": "button",
+            "ordinal": 0
+          },
+          {
+            "confidence": 0.5,
+            "reason": "Position 'form[1]/table[1]/row[2]/cell[2]/button[1]' in frame:content; stable while this legacy layout is unchanged.",
+            "kind": "structural",
+            "container_path": [
+              "frame:content"
+            ],
+            "structural_path": "form[1]/table[1]/row[2]/cell[2]/button[1]"
+          },
+          {
+            "confidence": 0.3,
+            "reason": "Last resort: a fixed offset from the unique text 'Member Number', for when the a11y tree fails.",
+            "kind": "visual_anchor",
+            "anchor_text": "Member Number",
+            "dx": 85.9,
+            "dy": 29.0
+          }
+        ]
+      }
+    },
+    {
+      "id": "read_savings_balance",
+      "description": "Read savings_balance.",
+      "risk": "safe",
+      "precondition": null,
+      "postcondition": null,
+      "timeout_ms": 10000,
+      "recoveries": [],
+      "action": "extract",
+      "target": {
+        "description": "savings balance value",
+        "candidates": [
+          {
+            "confidence": 0.7,
+            "reason": "The nearest cell right of the stable text 'Regular Savings', which identifies this row or column even when values change.",
+            "kind": "text_anchor",
+            "anchor_text": "Regular Savings",
+            "relation": "right_of",
+            "role": "cell",
+            "ordinal": 0
+          },
+          {
+            "confidence": 0.5,
+            "reason": "Position 'table[4]/row[2]/cell[3]' in frame:content; stable while this legacy layout is unchanged.",
+            "kind": "structural",
+            "container_path": [
+              "frame:content"
+            ],
+            "structural_path": "table[4]/row[2]/cell[3]"
+          },
+          {
+            "confidence": 0.3,
+            "reason": "Last resort: a fixed offset from the unique text 'Balance', for when the a11y tree fails.",
+            "kind": "visual_anchor",
+            "anchor_text": "Balance",
+            "dx": 0.0,
+            "dy": 25.0
+          }
+        ]
+      },
+      "output": "savings_balance",
+      "pattern": null
+    }
+  ],
+  "checkpoint": {
+    "kind": "all_of",
+    "conditions": [
+      {
+        "kind": "location_matches",
+        "pattern": "/t/:tenant/main",
+        "title_pattern": null
+      },
+      {
+        "kind": "node_present",
+        "target": {
+          "description": "savings balance value",
+          "candidates": [
+            {
+              "confidence": 0.7,
+              "reason": "The nearest cell right of the stable text 'Regular Savings', which identifies this row or column even when values change.",
+              "kind": "text_anchor",
+              "anchor_text": "Regular Savings",
+              "relation": "right_of",
+              "role": "cell",
+              "ordinal": 0
+            },
+            {
+              "confidence": 0.5,
+              "reason": "Position 'table[4]/row[2]/cell[3]' in frame:content; stable while this legacy layout is unchanged.",
+              "kind": "structural",
+              "container_path": [
+                "frame:content"
+              ],
+              "structural_path": "table[4]/row[2]/cell[3]"
+            },
+            {
+              "confidence": 0.3,
+              "reason": "Last resort: a fixed offset from the unique text 'Balance', for when the a11y tree fails.",
+              "kind": "visual_anchor",
+              "anchor_text": "Balance",
+              "dx": 0.0,
+              "dy": 25.0
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "outcomes": [
+    {
+      "code": "MEMBER_NOT_FOUND",
+      "description": "No member exists for the supplied number. A legitimate answer for the caller.",
+      "when": {
+        "kind": "text_visible",
+        "pattern": "No member found for number",
+        "regex": false,
+        "case_sensitive": false
+      },
+      "message_target": {
+        "description": "Not-found message",
+        "candidates": [
+          {
+            "confidence": 0.8,
+            "reason": "Product error text in a layout cell.",
+            "kind": "role_name",
+            "role": "cell",
+            "name": "No member found",
+            "exact": false
+          },
+          {
+            "confidence": 0.7,
+            "reason": "Same text as a bare text node.",
+            "kind": "role_name",
+            "role": "text",
+            "name": "No member found",
+            "exact": false
+          }
+        ]
+      },
+      "scope": null
+    },
+    {
+      "code": "MEMBER_RESTRICTED",
+      "description": "The member record is restricted for this operator. Permission denial, not a system failure.",
+      "when": {
+        "kind": "text_visible",
+        "pattern": "ACCESS DENIED",
+        "regex": false,
+        "case_sensitive": false
+      },
+      "message_target": {
+        "description": "Access denied message",
+        "candidates": [
+          {
+            "confidence": 0.8,
+            "reason": "Product error text in a layout cell.",
+            "kind": "role_name",
+            "role": "cell",
+            "name": "ACCESS DENIED",
+            "exact": false
+          },
+          {
+            "confidence": 0.7,
+            "reason": "Same text as a bare text node.",
+            "kind": "role_name",
+            "role": "text",
+            "name": "ACCESS DENIED",
+            "exact": false
+          }
+        ]
+      },
+      "scope": null
+    },
+    {
+      "code": "INVALID_MEMBER_NUMBER",
+      "description": "The application rejected the member number format.",
+      "when": {
+        "kind": "text_visible",
+        "pattern": "Member number must be numeric",
+        "regex": false,
+        "case_sensitive": false
+      },
+      "message_target": null,
+      "scope": null
+    },
+    {
+      "code": "INVALID_DEPOSIT",
+      "description": "The application rejected the initial deposit amount.",
+      "when": {
+        "kind": "text_visible",
+        "pattern": "Initial deposit must be a positive amount",
+        "regex": false,
+        "case_sensitive": false
+      },
+      "message_target": null,
+      "scope": null
+    }
+  ],
+  "recoveries": [
+    {
+      "name": "session_expired",
+      "description": "Session timed out; sign on again, then retry the interrupted step.",
+      "when": {
+        "kind": "text_visible",
+        "pattern": "Your session has expired",
+        "regex": false,
+        "case_sensitive": false
+      },
+      "response": {
+        "kind": "subflow",
+        "subflow": "login",
+        "then": "restart"
+      },
+      "max_applications": 1,
+      "scope": "global"
+    },
+    {
+      "name": "maintenance_notice",
+      "description": "Informational system notice overlay; acknowledge it.",
+      "when": {
+        "kind": "text_visible",
+        "pattern": "System Notice",
+        "regex": false,
+        "case_sensitive": false
+      },
+      "response": {
+        "kind": "dismiss",
+        "target": {
+          "description": "Acknowledge button",
+          "candidates": [
+            {
+              "confidence": 0.9,
+              "reason": "Notice button label is product text.",
+              "kind": "role_name",
+              "role": "button",
+              "name": "Acknowledge",
+              "exact": true
+            }
+          ]
+        }
+      },
+      "max_applications": 2,
+      "scope": "global"
+    },
+    {
+      "name": "native_alert",
+      "description": "Browser alert raised by the page; accept it.",
+      "when": {
+        "kind": "dialog_open",
+        "title_pattern": null,
+        "text_pattern": null,
+        "native": true
+      },
+      "response": {
+        "kind": "dismiss",
+        "target": null
+      },
+      "max_applications": 3,
+      "scope": "global"
+    },
+    {
+      "name": "transient_app_error",
+      "description": "Generic internal error page. The page stays until something navigates, so waiting alone cannot clear it; sign on again and re-run the flow from the start, once. A second occurrence is a hard failure.",
+      "when": {
+        "kind": "text_visible",
+        "pattern": "Internal Error. Reference ID",
+        "regex": false,
+        "case_sensitive": false
+      },
+      "response": {
+        "kind": "subflow",
+        "subflow": "login",
+        "then": "restart"
+      },
+      "max_applications": 1,
+      "scope": "global"
+    },
+    {
+      "name": "identity_verification",
+      "description": "Member identity challenge; no automated answer exists, a human must decide.",
+      "when": {
+        "kind": "text_visible",
+        "pattern": "Verify Member Identity",
+        "regex": false,
+        "case_sensitive": false
+      },
+      "response": {
+        "kind": "escalate",
+        "reason": "Member identity verification requires a human operator."
+      },
+      "max_applications": 1,
+      "scope": "global"
+    }
+  ],
+  "subflows": {
+    "login": [
+      {
+        "id": "login_open",
+        "description": "Open the sign-on page.",
+        "risk": "safe",
+        "precondition": null,
+        "postcondition": {
+          "kind": "node_present",
+          "target": {
+            "description": "User ID field",
+            "candidates": [
+              {
+                "confidence": 0.85,
+                "reason": "Sign-on form label is product text.",
+                "kind": "label",
+                "label": "User ID",
+                "role": "textbox"
+              }
+            ]
+          }
+        },
+        "timeout_ms": 10000,
+        "recoveries": [],
+        "action": "open",
+        "entry_point": "http://127.0.0.1:8700/t/lakeside/login"
+      },
+      {
+        "id": "login_user",
+        "description": "Enter the teller user id.",
+        "risk": "safe",
+        "precondition": null,
+        "postcondition": null,
+        "timeout_ms": 10000,
+        "recoveries": [],
+        "action": "type",
+        "target": {
+          "description": "User ID field",
+          "candidates": [
+            {
+              "confidence": 0.85,
+              "reason": "Sign-on form label is product text.",
+              "kind": "label",
+              "label": "User ID",
+              "role": "textbox"
+            }
+          ]
+        },
+        "value": "{{teller.username}}",
+        "clear_first": true
+      },
+      {
+        "id": "login_password",
+        "description": "Enter the teller password.",
+        "risk": "safe",
+        "precondition": null,
+        "postcondition": null,
+        "timeout_ms": 10000,
+        "recoveries": [],
+        "action": "type",
+        "target": {
+          "description": "Password field",
+          "candidates": [
+            {
+              "confidence": 0.85,
+              "reason": "Sign-on form label is product text.",
+              "kind": "label",
+              "label": "Password",
+              "role": "textbox"
+            }
+          ]
+        },
+        "value": "{{teller.password}}",
+        "clear_first": true
+      },
+      {
+        "id": "login_submit",
+        "description": "Sign on.",
+        "risk": "safe",
+        "precondition": null,
+        "postcondition": {
+          "kind": "text_visible",
+          "pattern": "Signed on as",
+          "regex": false,
+          "case_sensitive": false
+        },
+        "timeout_ms": 10000,
+        "recoveries": [],
+        "action": "click",
+        "target": {
+          "description": "Sign On button",
+          "candidates": [
+            {
+              "confidence": 0.9,
+              "reason": "Primary action label is product text.",
+              "kind": "role_name",
+              "role": "button",
+              "name": "Sign On",
+              "exact": true
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "provenance": {
+    "discovery_run_id": "disc-1458ec924f36",
+    "recorded_at": "2026-09-28T17:49:32.688017Z",
+    "planner": "ollama",
+    "model": "qwen3-vl:8b",
+    "recorded_on_tenant": "lakeside",
+    "goal": "Look up member {{member_number}} in CoreOne and return the balance of their savings share as savings_balance."
+  },
+  "stats": {
+    "runs": 7,
+    "successes": 3,
+    "business_outcomes": 3,
+    "failures": 1,
+    "fallback_matches": 0
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "mode": "discovery",
+  "run_id": "disc-1458ec924f36",
+  "planner": "ollama",
+  "model": "qwen3-vl:8b",
+  "status": "completed",
+  "reason": "The goal was to extract the savings balance, which has been successfully extracted as 1,250.00.",
+  "steps": 7,
+  "planner_calls": 7,
+  "invalid_decisions": 0,
+  "extracted": {
+    "savings_balance": "1,250.00"
+  },
+  "capability": "coreone.member_balance@1.0.0",
+  "record_error": null,
+  "record_warnings": [],
+  "evidence_dir": "evidence/runs/disc-1458ec924f36",
+  "artifact_path": "artifacts/coreone.member_balance/1.0.0.json"
+}

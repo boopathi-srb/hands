@@ -1,0 +1,75 @@
+{
+  "run_id": "replay-8d4d1fc2fde9",
+  "capability_id": "coreone.member_balance",
+  "capability_version": "1.0.0",
+  "tenant_id": null,
+  "started_at": "2026-09-28T17:51:35.227050Z",
+  "finished_at": "2026-09-28T17:51:38.259994Z",
+  "steps": [
+    {
+      "step_id": "login_open",
+      "status": "ok",
+      "matched_candidate_rank": null,
+      "matched_candidate_kind": null,
+      "recoveries_applied": [],
+      "duration_ms": 1365,
+      "fingerprint": "e3b0c44298fc1c14"
+    },
+    {
+      "step_id": "login_user",
+      "status": "ok",
+      "matched_candidate_rank": 0,
+      "matched_candidate_kind": "label",
+      "recoveries_applied": [],
+      "duration_ms": 185,
+      "fingerprint": "283fe66fc53ac71f"
+    },
+    {
+      "step_id": "login_password",
+      "status": "ok",
+      "matched_candidate_rank": 0,
+      "matched_candidate_kind": "label",
+      "recoveries_applied": [],
+      "duration_ms": 353,
+      "fingerprint": "283fe66fc53ac71f"
+    },
+    {
+      "step_id": "login_submit",
+      "status": "failed",
+      "matched_candidate_rank": 0,
+      "matched_candidate_kind": "role_name",
+      "recoveries_applied": [
+        "identity_verification"
+      ],
+      "duration_ms": 1127,
+      "fingerprint": "283fe66fc53ac71f"
+    },
+    {
+      "step_id": "sign_on",
+      "status": "failed",
+      "matched_candidate_rank": null,
+      "matched_candidate_kind": null,
+      "recoveries_applied": [],
+      "duration_ms": 3032,
+      "fingerprint": null
+    }
+  ],
+  "interventions": [],
+  "drift": {
+    "fallback_steps": [],
+    "fingerprint_changes": []
+  },
+  "evidence_dir": "evidence/runs/replay-8d4d1fc2fde9",
+  "status": "failed",
+  "failure": {
+    "code": "unexpected_state",
+    "step_id": "login_submit",
+    "message": "recovery 'identity_verification' requires a human operator but no escalator is configured",
+    "expected": "an escalator to hand the session to an operator",
+    "observed": "location 'http://127.0.0.1:8700/t/lakeside/main'; title 'Lakeside Community CU - CoreOne Member Services'; dialogs ['Verify Member Identity']; visible text []",
+    "evidence": [
+      "snapshots/055-failure-login_submit.json",
+      "screenshots/056-failure-login_submit.png"
+    ]
+  }
+}

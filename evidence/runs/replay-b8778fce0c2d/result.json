@@ -1,0 +1,24 @@
+{
+  "run_id": "replay-b8778fce0c2d",
+  "capability_id": "coreone.member_balance",
+  "capability_version": "1.0.0",
+  "tenant_id": null,
+  "started_at": "2026-09-28T17:50:43.070909Z",
+  "finished_at": "2026-09-28T17:50:43.071085Z",
+  "steps": [],
+  "interventions": [],
+  "drift": {
+    "fallback_steps": [],
+    "fingerprint_changes": []
+  },
+  "evidence_dir": "evidence/runs/replay-b8778fce0c2d",
+  "status": "failed",
+  "failure": {
+    "code": "invalid_input",
+    "step_id": null,
+    "message": "input 'member_number' does not match the required pattern '^\\\\d+$'",
+    "expected": "^\\d+$",
+    "observed": "'abc'",
+    "evidence": []
+  }
+}

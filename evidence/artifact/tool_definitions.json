@@ -1,0 +1,23 @@
+[
+  {
+    "name": "coreone__member_balance",
+    "description": "Member savings balance. Look up a member by member number and return the balance of their savings share. Capability 'coreone.member_balance' version 1.0.0 (draft). On success returns: savings_balance (decimal). Possible business outcomes: MEMBER_NOT_FOUND: No member exists for the supplied number. A legitimate answer for the caller.; MEMBER_RESTRICTED: The member record is restricted for this operator. Permission denial, not a system failure.; INVALID_MEMBER_NUMBER: The application rejected the member number format.; INVALID_DEPOSIT: The application rejected the initial deposit amount. Returns status 'success' (outputs), 'business_outcome' (code + message, a legitimate answer), 'escalated' (a human took over), or 'failed' (step, expected, observed, evidence).",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "member_number": {
+          "type": "string",
+          "pattern": "^\\d+$",
+          "examples": [
+            "10001"
+          ],
+          "description": "The member number to use."
+        }
+      },
+      "required": [
+        "member_number"
+      ],
+      "additionalProperties": false
+    }
+  }
+]

@@ -1,0 +1,41 @@
+{
+  "schema_version": "1.0",
+  "tenant_id": "prairie",
+  "capability_id": "coreone.member_balance",
+  "base_version_range": ">=1.0.0,<2.0.0",
+  "entry_point_overrides": {
+    "login_open": "http://127.0.0.1:8700/t/prairie/login"
+  },
+  "target_overrides": {
+    "read_savings_balance": {
+      "description": "savings balance value (Prairie column order: Share ID, Balance, Description, Available)",
+      "candidates": [
+        {
+          "confidence": 0.75,
+          "reason": "Prairie puts Balance before Description; the second other cell in the Share Savings row is Balance.",
+          "kind": "text_anchor",
+          "anchor_text": "Share Savings",
+          "relation": "same_row",
+          "role": "cell",
+          "ordinal": 1
+        },
+        {
+          "confidence": 0.45,
+          "reason": "Position of the savings balance in Prairie's shares table; brittle if rows are reordered.",
+          "kind": "structural",
+          "container_path": [
+            "frame:content"
+          ],
+          "structural_path": "table[4]/row[2]/cell[2]"
+        }
+      ]
+    }
+  },
+  "text_aliases": {
+    "Member Number": "Account Number",
+    "Search": "Find",
+    "Regular Savings": "Share Savings"
+  },
+  "outcome_overrides": {},
+  "notes": "Prairie Federal CU runs CoreOne 7.4 with renamed labels and a reordered shares table. Validated by replaying the base capability on tenant prairie."
+}

@@ -1,0 +1,592 @@
+{
+  "observed_at": "2026-09-28T17:51:34.228453Z",
+  "location": {
+    "kind": "url",
+    "value": "http://127.0.0.1:8700/t/lakeside/main",
+    "title": "Lakeside Community CU - CoreOne Member Services"
+  },
+  "nodes": [
+    {
+      "ref": "n1",
+      "role": "table",
+      "name": "",
+      "text": "",
+      "value": null,
+      "label": null,
+      "container_path": [
+        "frame:top"
+      ],
+      "structural_path": "table[1]",
+      "bounds": {
+        "x": 0.0,
+        "y": 0.0,
+        "width": 1280.0,
+        "height": 62.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n2",
+      "role": "row",
+      "name": "",
+      "text": "",
+      "value": null,
+      "label": null,
+      "container_path": [
+        "frame:top"
+      ],
+      "structural_path": "table[1]/row[1]",
+      "bounds": {
+        "x": 0.0,
+        "y": 0.0,
+        "width": 1280.0,
+        "height": 62.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n3",
+      "role": "cell",
+      "name": "Lakeside Community CU CoreOne Member Services 7.4",
+      "text": "Lakeside Community CU CoreOne Member Services 7.4",
+      "value": null,
+      "label": null,
+      "container_path": [
+        "frame:top"
+      ],
+      "structural_path": "table[1]/row[1]/cell[1]",
+      "bounds": {
+        "x": 0.0,
+        "y": 0.0,
+        "width": 701.15625,
+        "height": 62.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n4",
+      "role": "cell",
+      "name": "Signed on as [REDACTED:credential_teller.username]",
+      "text": "Signed on as [REDACTED:credential_teller.username]",
+      "value": null,
+      "label": null,
+      "container_path": [
+        "frame:top"
+      ],
+      "structural_path": "table[1]/row[1]/cell[2]",
+      "bounds": {
+        "x": 701.15625,
+        "y": 0.0,
+        "width": 578.84375,
+        "height": 62.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n5",
+      "role": "link",
+      "name": "Sign Off",
+      "text": "Sign Off",
+      "value": null,
+      "label": null,
+      "container_path": [
+        "frame:top"
+      ],
+      "structural_path": "table[1]/row[1]/cell[2]/link[1]",
+      "bounds": {
+        "x": 1225.265625,
+        "y": 22.0,
+        "width": 46.734375,
+        "height": 18.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n6",
+      "role": "table",
+      "name": "",
+      "text": "",
+      "value": null,
+      "label": null,
+      "container_path": [
+        "frame:nav"
+      ],
+      "structural_path": "table[1]",
+      "bounds": {
+        "x": 0.0,
+        "y": 65.0,
+        "width": 190.0,
+        "height": 321.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n7",
+      "role": "row",
+      "name": "",
+      "text": "",
+      "value": null,
+      "label": null,
+      "container_path": [
+        "frame:nav"
+      ],
+      "structural_path": "table[1]/row[1]",
+      "bounds": {
+        "x": 0.0,
+        "y": 65.0,
+        "width": 190.0,
+        "height": 25.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n8",
+      "role": "cell",
+      "name": "Functions",
+      "text": "Functions",
+      "value": null,
+      "label": null,
+      "container_path": [
+        "frame:nav"
+      ],
+      "structural_path": "table[1]/row[1]/cell[1]",
+      "bounds": {
+        "x": 0.0,
+        "y": 65.0,
+        "width": 190.0,
+        "height": 25.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n9",
+      "role": "row",
+      "name": "",
+      "text": "",
+      "value": null,
+      "label": null,
+      "container_path": [
+        "frame:nav"
+      ],
+      "structural_path": "table[1]/row[2]",
+      "bounds": {
+        "x": 0.0,
+        "y": 90.0,
+        "width": 190.0,
+        "height": 25.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n10",
+      "role": "cell",
+      "name": "»",
+      "text": "»",
+      "value": null,
+      "label": null,
+      "container_path": [
+        "frame:nav"
+      ],
+      "structural_path": "table[1]/row[2]/cell[1]",
+      "bounds": {
+        "x": 0.0,
+        "y": 90.0,
+        "width": 190.0,
+        "height": 25.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n11",
+      "role": "link",
+      "name": "Member Inquiry",
+      "text": "Member Inquiry",
+      "value": null,
+      "label": null,
+      "container_path": [
+        "frame:nav"
+      ],
+      "structural_path": "table[1]/row[2]/cell[1]/link[1]",
+      "bounds": {
+        "x": 15.84375,
+        "y": 95.0,
+        "width": 90.3125,
+        "height": 15.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n12",
+      "role": "row",
+      "name": "",
+      "text": "",
+      "value": null,
+      "label": null,
+      "container_path": [
+        "frame:nav"
+      ],
+      "structural_path": "table[1]/row[3]",
+      "bounds": {
+        "x": 0.0,
+        "y": 115.0,
+        "width": 190.0,
+        "height": 25.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n13",
+      "role": "cell",
+      "name": "»",
+      "text": "»",
+      "value": null,
+      "label": null,
+      "container_path": [
+        "frame:nav"
+      ],
+      "structural_path": "table[1]/row[3]/cell[1]",
+      "bounds": {
+        "x": 0.0,
+        "y": 115.0,
+        "width": 190.0,
+        "height": 25.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n14",
+      "role": "link",
+      "name": "Open Share Account",
+      "text": "Open Share Account",
+      "value": null,
+      "label": null,
+      "container_path": [
+        "frame:nav"
+      ],
+      "structural_path": "table[1]/row[3]/cell[1]/link[1]",
+      "bounds": {
+        "x": 15.84375,
+        "y": 120.0,
+        "width": 119.984375,
+        "height": 15.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n15",
+      "role": "row",
+      "name": "",
+      "text": "",
+      "value": null,
+      "label": null,
+      "container_path": [
+        "frame:nav"
+      ],
+      "structural_path": "table[1]/row[4]",
+      "bounds": {
+        "x": 0.0,
+        "y": 140.0,
+        "width": 190.0,
+        "height": 25.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n16",
+      "role": "cell",
+      "name": "»",
+      "text": "»",
+      "value": null,
+      "label": null,
+      "container_path": [
+        "frame:nav"
+      ],
+      "structural_path": "table[1]/row[4]/cell[1]",
+      "bounds": {
+        "x": 0.0,
+        "y": 140.0,
+        "width": 190.0,
+        "height": 25.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n17",
+      "role": "link",
+      "name": "Reports",
+      "text": "Reports",
+      "value": null,
+      "label": null,
+      "container_path": [
+        "frame:nav"
+      ],
+      "structural_path": "table[1]/row[4]/cell[1]/link[1]",
+      "bounds": {
+        "x": 15.84375,
+        "y": 145.0,
+        "width": 45.53125,
+        "height": 15.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n18",
+      "role": "row",
+      "name": "",
+      "text": "",
+      "value": null,
+      "label": null,
+      "container_path": [
+        "frame:nav"
+      ],
+      "structural_path": "table[1]/row[5]",
+      "bounds": {
+        "x": 0.0,
+        "y": 165.0,
+        "width": 190.0,
+        "height": 200.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n19",
+      "role": "cell",
+      "name": "",
+      "text": "",
+      "value": null,
+      "label": null,
+      "container_path": [
+        "frame:nav"
+      ],
+      "structural_path": "table[1]/row[5]/cell[1]",
+      "bounds": {
+        "x": 0.0,
+        "y": 165.0,
+        "width": 190.0,
+        "height": 200.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n20",
+      "role": "row",
+      "name": "",
+      "text": "",
+      "value": null,
+      "label": null,
+      "container_path": [
+        "frame:nav"
+      ],
+      "structural_path": "table[1]/row[6]",
+      "bounds": {
+        "x": 0.0,
+        "y": 365.0,
+        "width": 190.0,
+        "height": 21.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n21",
+      "role": "cell",
+      "name": "Northwind Core Systems",
+      "text": "Northwind Core Systems",
+      "value": null,
+      "label": null,
+      "container_path": [
+        "frame:nav"
+      ],
+      "structural_path": "table[1]/row[6]/cell[1]",
+      "bounds": {
+        "x": 0.0,
+        "y": 365.0,
+        "width": 190.0,
+        "height": 21.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n22",
+      "role": "table",
+      "name": "",
+      "text": "",
+      "value": null,
+      "label": null,
+      "container_path": [
+        "frame:content"
+      ],
+      "structural_path": "table[1]",
+      "bounds": {
+        "x": 191.0,
+        "y": 65.0,
+        "width": 1089.0,
+        "height": 24.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n23",
+      "role": "row",
+      "name": "",
+      "text": "",
+      "value": null,
+      "label": null,
+      "container_path": [
+        "frame:content"
+      ],
+      "structural_path": "table[1]/row[1]",
+      "bounds": {
+        "x": 191.0,
+        "y": 65.0,
+        "width": 1089.0,
+        "height": 24.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n24",
+      "role": "cell",
+      "name": "CoreOne Error",
+      "text": "CoreOne Error",
+      "value": null,
+      "label": null,
+      "container_path": [
+        "frame:content"
+      ],
+      "structural_path": "table[1]/row[1]/cell[1]",
+      "bounds": {
+        "x": 191.0,
+        "y": 65.0,
+        "width": 1089.0,
+        "height": 24.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n25",
+      "role": "table",
+      "name": "",
+      "text": "",
+      "value": null,
+      "label": null,
+      "container_path": [
+        "frame:content"
+      ],
+      "structural_path": "table[2]",
+      "bounds": {
+        "x": 191.0,
+        "y": 107.0,
+        "width": 308.453125,
+        "height": 50.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n26",
+      "role": "row",
+      "name": "",
+      "text": "",
+      "value": null,
+      "label": null,
+      "container_path": [
+        "frame:content"
+      ],
+      "structural_path": "table[2]/row[1]",
+      "bounds": {
+        "x": 191.0,
+        "y": 107.0,
+        "width": 308.453125,
+        "height": 27.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n27",
+      "role": "cell",
+      "name": "Internal Error. Reference ID ERR-5521.",
+      "text": "Internal Error. Reference ID ERR-5521.",
+      "value": null,
+      "label": null,
+      "container_path": [
+        "frame:content"
+      ],
+      "structural_path": "table[2]/row[1]/cell[1]",
+      "bounds": {
+        "x": 191.0,
+        "y": 107.0,
+        "width": 308.453125,
+        "height": 27.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n28",
+      "role": "row",
+      "name": "",
+      "text": "",
+      "value": null,
+      "label": null,
+      "container_path": [
+        "frame:content"
+      ],
+      "structural_path": "table[2]/row[2]",
+      "bounds": {
+        "x": 191.0,
+        "y": 134.0,
+        "width": 308.453125,
+        "height": 23.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n29",
+      "role": "cell",
+      "name": "Contact the help desk and quote the reference ID.",
+      "text": "Contact the help desk and quote the reference ID.",
+      "value": null,
+      "label": null,
+      "container_path": [
+        "frame:content"
+      ],
+      "structural_path": "table[2]/row[2]/cell[1]",
+      "bounds": {
+        "x": 191.0,
+        "y": 134.0,
+        "width": 308.453125,
+        "height": 23.0
+      },
+      "enabled": true,
+      "focused": false
+    }
+  ],
+  "dialogs": [],
+  "fingerprint": "e96313ef3d3c0d95"
+}

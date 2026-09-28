@@ -35,9 +35,12 @@ The model discovers. The artifact becomes a reusable capability. Deterministic r
 ## Phases
 
 - [x] Phase 1: contracts in `hands.core`, repo skeleton, this plan
-- [ ] Phase 2 (parallel): A target app, B locate, C surfaces, D desktop, E policy/evidence, F session/console
-- [ ] Phase 3 (parallel): G replay + catalog, H discovery
-- [ ] Phase 4: CLI, dev discovery on local Qwen3-VL, prod discovery on Claude Sonnet 5, replay evidence incl. failures and escalation, tenant variant, desktop observation evidence, README, REPORT
+- [x] Phase 2 (parallel): A target app, B locate, C surfaces, D desktop, E policy/evidence, F session/console
+- [x] Phase 3 (parallel): G replay + catalog, H discovery
+- [x] Phase 4a: CLI and runtime composition root, README, REPORT
+- [x] Phase 4b: dev discovery on local Qwen3-VL (fake surface and live web), replay evidence incl. failures, recoveries, escalation, tenant variant
+- [ ] Phase 4c: prod discovery on Claude Sonnet 5 (needs ANTHROPIC_API_KEY)
+- [ ] Phase 4d: desktop observation evidence (needs macOS Accessibility permission for the terminal)
 
 ## Mock target: CoreOne Member Services
 

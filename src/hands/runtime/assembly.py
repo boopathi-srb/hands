@@ -43,7 +43,8 @@ class SessionOptions:
     capability_status: Literal["draft", "approved", "deprecated"] | None = None
     risky_confirmed: bool = False
     fake_tenant: str = "lakeside"
-    record_trace: bool = True
+    # Playwright traces capture typed text verbatim and bypass the redactor, so they are opt-in and local-only.
+    record_trace: bool = False
 
 
 @dataclass

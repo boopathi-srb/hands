@@ -1,0 +1,92 @@
+{
+  "run_id": "replay-579e2748d78c",
+  "capability_id": "coreone.member_balance",
+  "capability_version": "1.0.0",
+  "tenant_id": "prairie",
+  "started_at": "2026-09-28T17:51:38.919973Z",
+  "finished_at": "2026-09-28T17:51:43.675748Z",
+  "steps": [
+    {
+      "step_id": "login_open",
+      "status": "ok",
+      "matched_candidate_rank": null,
+      "matched_candidate_kind": null,
+      "recoveries_applied": [],
+      "duration_ms": 1374,
+      "fingerprint": "e3b0c44298fc1c14"
+    },
+    {
+      "step_id": "login_user",
+      "status": "ok",
+      "matched_candidate_rank": 0,
+      "matched_candidate_kind": "label",
+      "recoveries_applied": [],
+      "duration_ms": 179,
+      "fingerprint": "283fe66fc53ac71f"
+    },
+    {
+      "step_id": "login_password",
+      "status": "ok",
+      "matched_candidate_rank": 0,
+      "matched_candidate_kind": "label",
+      "recoveries_applied": [],
+      "duration_ms": 336,
+      "fingerprint": "283fe66fc53ac71f"
+    },
+    {
+      "step_id": "login_submit",
+      "status": "ok",
+      "matched_candidate_rank": 0,
+      "matched_candidate_kind": "role_name",
+      "recoveries_applied": [],
+      "duration_ms": 1063,
+      "fingerprint": "283fe66fc53ac71f"
+    },
+    {
+      "step_id": "sign_on",
+      "status": "ok",
+      "matched_candidate_rank": null,
+      "matched_candidate_kind": null,
+      "recoveries_applied": [],
+      "duration_ms": 3135,
+      "fingerprint": null
+    },
+    {
+      "step_id": "type_member_number_textbox",
+      "status": "ok",
+      "matched_candidate_rank": 0,
+      "matched_candidate_kind": "label",
+      "recoveries_applied": [],
+      "duration_ms": 177,
+      "fingerprint": "e97c841901940c53"
+    },
+    {
+      "step_id": "click_search_button",
+      "status": "ok",
+      "matched_candidate_rank": 0,
+      "matched_candidate_kind": "role_name",
+      "recoveries_applied": [],
+      "duration_ms": 1075,
+      "fingerprint": "e97c841901940c53"
+    },
+    {
+      "step_id": "read_savings_balance",
+      "status": "ok",
+      "matched_candidate_rank": 0,
+      "matched_candidate_kind": "text_anchor",
+      "recoveries_applied": [],
+      "duration_ms": 183,
+      "fingerprint": "8856f116fb270e17"
+    }
+  ],
+  "interventions": [],
+  "drift": {
+    "fallback_steps": [],
+    "fingerprint_changes": []
+  },
+  "evidence_dir": "evidence/runs/replay-579e2748d78c",
+  "status": "success",
+  "outputs": {
+    "savings_balance": "9870.12"
+  }
+}

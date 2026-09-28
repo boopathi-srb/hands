@@ -1,0 +1,69 @@
+{
+  "run_id": "replay-d6c721fe95a6",
+  "capability_id": "coreone.member_balance",
+  "capability_version": "1.0.0",
+  "tenant_id": null,
+  "started_at": "2026-09-28T17:53:25.536454Z",
+  "finished_at": "2026-09-28T17:53:28.628781Z",
+  "steps": [
+    {
+      "step_id": "login_open",
+      "status": "ok",
+      "matched_candidate_rank": null,
+      "matched_candidate_kind": null,
+      "recoveries_applied": [],
+      "duration_ms": 1383,
+      "fingerprint": "e3b0c44298fc1c14"
+    },
+    {
+      "step_id": "login_user",
+      "status": "ok",
+      "matched_candidate_rank": 0,
+      "matched_candidate_kind": "label",
+      "recoveries_applied": [],
+      "duration_ms": 219,
+      "fingerprint": "283fe66fc53ac71f"
+    },
+    {
+      "step_id": "login_password",
+      "status": "ok",
+      "matched_candidate_rank": 0,
+      "matched_candidate_kind": "label",
+      "recoveries_applied": [],
+      "duration_ms": 338,
+      "fingerprint": "283fe66fc53ac71f"
+    },
+    {
+      "step_id": "login_submit",
+      "status": "failed",
+      "matched_candidate_rank": 0,
+      "matched_candidate_kind": "role_name",
+      "recoveries_applied": [
+        "identity_verification"
+      ],
+      "duration_ms": 1149,
+      "fingerprint": "283fe66fc53ac71f"
+    },
+    {
+      "step_id": "sign_on",
+      "status": "failed",
+      "matched_candidate_rank": null,
+      "matched_candidate_kind": null,
+      "recoveries_applied": [],
+      "duration_ms": 3091,
+      "fingerprint": null
+    }
+  ],
+  "interventions": [
+    "replay-d6c721fe95a6-intervention-1"
+  ],
+  "drift": {
+    "fallback_steps": [],
+    "fingerprint_changes": []
+  },
+  "evidence_dir": "evidence/runs/replay-d6c721fe95a6",
+  "status": "escalated",
+  "intervention_id": "replay-d6c721fe95a6-intervention-1",
+  "reason": "Member identity verification requires a human operator.",
+  "operator_note": "scripted operator chose abort"
+}

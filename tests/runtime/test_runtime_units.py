@@ -14,13 +14,13 @@ from hands.runtime.assembly import SessionOptions, build_session
 from hands.runtime.commands import (
     RESULT_EXIT_CODES,
     DiscoverRequest,
+    ReplayRequest,
     _infer_input_spec,
     catalog_list,
     catalog_set_status,
     catalog_tools,
     run_discover,
     run_replay,
-    ReplayRequest,
 )
 from hands.runtime.credentials import EnvCredentialProvider, credential_env_name
 from hands.runtime.planners import build_planner
@@ -187,3 +187,9 @@ async def test_replay_unknown_capability_is_an_error(tmp_path: Path) -> None:
                             session=_options(tmp_path, "replay", "replay-dd"), artifacts_dir=tmp_path)
     outcome = await run_replay(request)
     assert outcome.exit_code == 2 and outcome.summary["status"] == "error"
+
+
+def test_playwright_traces_are_opt_in() -> None:
+    """Traces record typed input verbatim and bypass redaction, so they must never be on by default."""
+    options = SessionOptions(mode="replay", run_id="replay-ee", evidence_root=Path("."), policy_path=POLICY)
+    assert options.record_trace is False

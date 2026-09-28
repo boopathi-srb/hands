@@ -53,12 +53,14 @@ def _emit(outcome: CommandOutcome) -> None:
 def _session_options(
     mode: str, evidence_root: Path, policy: Path, surface: SurfaceChoice, headed: bool,
     escalation: EscalationMode, console_port: int, tenant: str, risky_confirmed: bool = False,
+    trace: bool = False,
 ) -> SessionOptions:
     prefix = "disc" if mode == "discovery" else "replay"
     return SessionOptions(
         mode="discovery" if mode == "discovery" else "replay", run_id=new_run_id(prefix),
         evidence_root=evidence_root, policy_path=policy, surface=surface, headless=not headed,
         escalation=escalation, console_port=console_port, fake_tenant=tenant, risky_confirmed=risky_confirmed,
+        record_trace=trace,
     )
 
 
@@ -81,6 +83,7 @@ def discover(
     max_steps: int = typer.Option(25, help="Hard cap on model decisions."),
     surface: str = typer.Option("web", help="web (Playwright) or fake (in-memory CoreOne)."),
     headed: bool = typer.Option(False, help="Show the browser window."),
+    trace: bool = typer.Option(False, help="Record a Playwright trace. Contains UNREDACTED typed input: local only."),
     escalation: str = typer.Option("console", help="console, scripted-resume, scripted-abort, or none."),
     console_port: int = typer.Option(8765, help="Operator console port."),
     evidence_root: Path = typer.Option(DEFAULT_EVIDENCE),
@@ -95,7 +98,7 @@ def discover(
         planner=_choice(planner, PlannerChoice), model=model, cassette_path=cassette,
         cassette_mode=_choice(cassette_mode, CassetteChoice), max_steps=max_steps,
         session=_session_options("discovery", evidence_root, policy, _choice(surface, SurfaceChoice), headed,
-                                 _choice(escalation, EscalationMode), console_port, tenant),
+                                 _choice(escalation, EscalationMode), console_port, tenant, trace=trace),
         profile_path=profile, artifacts_dir=artifacts_dir,
     )
     _emit(asyncio.run(run_discover(request)))
@@ -112,6 +115,7 @@ def replay(
     target_url: str = typer.Option(DEFAULT_TARGET, help="Mock app base URL, used only to arm faults."),
     surface: str = typer.Option("web", help="web (Playwright) or fake (in-memory CoreOne)."),
     headed: bool = typer.Option(False, help="Show the browser window."),
+    trace: bool = typer.Option(False, help="Record a Playwright trace. Contains UNREDACTED typed input: local only."),
     escalation: str = typer.Option("console", help="console, scripted-resume, scripted-abort, or none."),
     console_port: int = typer.Option(8765, help="Operator console port."),
     evidence_root: Path = typer.Option(DEFAULT_EVIDENCE),
@@ -124,7 +128,7 @@ def replay(
         risky_confirmed=risky_confirmed, faults=fault, target_url=target_url,
         session=_session_options("replay", evidence_root, policy, _choice(surface, SurfaceChoice), headed,
                                  _choice(escalation, EscalationMode), console_port, tenant or "lakeside",
-                                 risky_confirmed),
+                                 risky_confirmed, trace=trace),
         artifacts_dir=artifacts_dir,
     )
     _emit(asyncio.run(run_replay(request)))
