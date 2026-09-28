@@ -1,0 +1,59 @@
+# Policy for the CoreOne Member Services mock (Northwind Core Systems, CoreOne 7.4) and the desktop demo.
+# Deny by default: anything not allowlisted here is refused by hands.policy.YamlPolicyGate.
+version: 1
+name: coreone
+description: >-
+  Automation may work inside the two CoreOne tenants on the local mock only. Irreversible controls
+  (Submit, Confirm, Delete, Transfer, Wire, Close Account, Approve, ...) are risky everywhere, and every
+  control on a review/confirmation page except Cancel/Back is risky. The fault-injection admin API is
+  never reachable. The desktop demo may only touch Calculator.
+
+surfaces:
+  # A fresh browser tab or an empty desktop location may only be used to `open` an allowlisted entry point.
+  start_locations: ["about:blank", ""]
+  web:
+    allowed_origins:
+      - http://127.0.0.1:8700
+    allowed_path_patterns:
+      - /t/lakeside/**
+      - /t/prairie/**
+    blocked_path_patterns:
+      - /_admin/**            # fault injection: test harness only, never for automation
+      - /t/*/_admin/**
+      - /docs/**              # framework-generated API docs
+      - /openapi.json
+  desktop:
+    allowed_bundle_ids:
+      - com.apple.calculator
+    allowed_window_title_patterns:
+      - "*"
+
+actions:
+  allowed:
+    discovery: [open, click, type, press, select, scroll]
+    replay: [open, click, type, press, select, scroll]
+    human: [click, type, press, select, scroll]
+
+risk:
+  default: safe
+  rules:
+    - name: irreversible-controls
+      description: Controls whose wording commits money movement, account changes or approvals.
+      match:
+        control_pattern: >-
+          \b(submit|confirm|delete|remove|transfer|wire|close\s+account|approve|authori[sz]e|disburse|withdraw(al)?|void|reverse|post\s+transaction|pay)\b
+        action_kinds: [click, press]
+    - name: review-page-commit
+      description: >-
+        Anything but Cancel/Back on a review (confirmation) page may commit the change, including Enter.
+      match:
+        path_patterns:
+          - /t/*/review
+          - /t/*/member/*/review
+          - /t/*/member/*/open-share/review
+        action_kinds: [click, press]
+        control_exclude_pattern: ^\s*(cancel|back)\s*$
+  handling:
+    discovery: escalate                       # the model never commits; a human decides
+    replay: allow_if_approved_and_confirmed   # approved capability AND caller passed risky_confirmed
+    human: allow                              # operators may commit; the decision is kept for audit
