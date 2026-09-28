@@ -72,7 +72,7 @@ recoveries:
     max_applications: 2
   - name: native_alert
     description: Browser alert raised by the page; accept it.
-    when: {kind: dialog_open}
+    when: {kind: dialog_open, native: true}
     response: {kind: dismiss}
     max_applications: 3
   - name: transient_app_error

@@ -270,6 +270,10 @@ def _check_title_pattern(title_pattern: str, title: str) -> tuple[bool, str]:
 # ---------------------------------------------------------------- dialog_open
 
 
+def _native_matches(wanted_native: bool | None, dialog_native: bool) -> bool:
+    return wanted_native is None or wanted_native == dialog_native
+
+
 def _evaluate_dialog_open(condition: DialogOpen, dialogs: list[Dialog]) -> ConditionResult:
     title_regex = _compile_optional(condition.title_pattern)
     text_regex = _compile_optional(condition.text_pattern)
@@ -281,6 +285,8 @@ def _evaluate_dialog_open(condition: DialogOpen, dialogs: list[Dialog]) -> Condi
         )
     wanted = f"title~{condition.title_pattern!r} text~{condition.text_pattern!r}"
     for index, dialog in enumerate(dialogs):
+        if not _native_matches(condition.native, dialog.native):
+            continue
         if _regex_hits(title_regex, dialog.title) and _regex_hits(text_regex, dialog.text):
             return ConditionResult(
                 met=True,

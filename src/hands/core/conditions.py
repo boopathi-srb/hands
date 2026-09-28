@@ -35,6 +35,9 @@ class DialogOpen(BaseModel):
     kind: Literal["dialog_open"] = "dialog_open"
     title_pattern: str | None = None
     text_pattern: str | None = None
+    native: bool | None = Field(
+        default=None, description="True: only browser/OS-native dialogs. False: only in-page modals. None: any."
+    )
 
 
 class ValueMatches(BaseModel):
