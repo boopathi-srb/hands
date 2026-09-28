@@ -63,6 +63,7 @@ class BrowserSurface:
         self._handles: dict[str, NodeHandle] = {}
         self._last_observation: Observation | None = None
         self._closed = False
+        self._live_view: CdpLiveView | None = None
 
     # ------------------------------------------------------------ lifecycle
 
@@ -120,7 +121,10 @@ class BrowserSurface:
         return await self._actions.perform(target, action, self._handles)
 
     def live_view(self) -> CdpLiveView:
-        return CdpLiveView(self._session.page, self._dialogs, self._navigations)
+        """One transport per session: the console streams through it and the input channel injects through it."""
+        if self._live_view is None:
+            self._live_view = CdpLiveView(self._session.page, self._dialogs, self._navigations)
+        return self._live_view
 
     # ------------------------------------------------------------ evidence
 

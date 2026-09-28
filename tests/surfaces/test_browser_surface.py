@@ -448,3 +448,13 @@ async def test_coreone_fake_login_matches_browser_extraction_of_same_markup(
 
     assert shape(browser_view) == shape(fake_view)
     assert browser_view.fingerprint == fake_view.fingerprint
+
+
+@pytest.mark.browser
+async def test_live_view_is_one_transport_per_session() -> None:
+    """The console starts the stream and the input channel injects; both must share one started transport."""
+    surface = await BrowserSurface.launch(headless=True)
+    try:
+        assert surface.live_view() is surface.live_view()
+    finally:
+        await surface.close()
