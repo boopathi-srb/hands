@@ -158,3 +158,12 @@ def test_save_failure_is_reported(tmp_path: Path) -> None:
 
 def test_updated_replay_stats_from_zero() -> None:
     assert updated_replay_stats(ReplayStats(), success()) == ReplayStats(runs=1, successes=1)
+
+
+def test_next_minor_bumps_minor_and_resets_patch() -> None:
+    from hands.catalog.versions import next_minor
+
+    assert next_minor("1.0.0") == "1.1.0"
+    assert next_minor("2.3.4") == "2.4.0"
+    assert next_minor("not-a-version") is None
+    assert next_minor("") is None

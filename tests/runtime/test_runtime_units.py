@@ -203,3 +203,22 @@ def test_default_models_come_from_planner_constants() -> None:
     assert _default_model("anthropic") == DEFAULT_ANTHROPIC_MODEL
     assert _default_model("ollama") == "qwen3-vl:8b"
     assert _default_model("scripted") is None
+
+
+async def test_rediscovery_never_overwrites_a_recorded_version(tmp_path: Path) -> None:
+    """A second discovery of the same capability id is saved as 1.1.0; 1.0.0 stays untouched."""
+    def request(run_id: str) -> DiscoverRequest:
+        return DiscoverRequest(
+            goal=GOAL, entry_point="http://127.0.0.1:8700/t/lakeside/login", inputs={"member_number": "10001"},
+            sensitive_inputs=[], capability_id="coreone.member_balance", title="t", description="d",
+            tenant="lakeside", planner="scripted", model=None, cassette_path=None, cassette_mode="off",
+            max_steps=25, session=_options(tmp_path, "discovery", run_id), profile_path=PROFILE,
+            artifacts_dir=tmp_path / "artifacts",
+        )
+
+    first = await run_discover(request("disc-aa"))
+    original = (tmp_path / "artifacts" / "coreone.member_balance" / "1.0.0.json").read_text()
+    second = await run_discover(request("disc-bb"))
+    assert first.summary["capability"] == "coreone.member_balance@1.0.0"
+    assert second.summary["capability"] == "coreone.member_balance@1.1.0"
+    assert (tmp_path / "artifacts" / "coreone.member_balance" / "1.0.0.json").read_text() == original

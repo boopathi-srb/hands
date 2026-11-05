@@ -92,3 +92,12 @@ def _check_comparator(version: SemVer, comparator: str) -> RangeCheck:
         return RangeCheck(satisfied=False, error=f"range comparator '{comparator}' is not valid")
     operator = match.group(1) or ""
     return RangeCheck(satisfied=_OPERATORS[operator](version, bound))
+
+
+def next_minor(version: str) -> str | None:
+    """`1.0.0` -> `1.1.0`: a re-recorded flow is a compatible new version. None for an invalid version."""
+    parsed = parse_semver(version)
+    if parsed is None:
+        return None
+    major, minor, _patch = parsed
+    return f"{major}.{minor + 1}.0"

@@ -11,7 +11,8 @@ from typing import Any
 
 import httpx
 
-from hands.catalog import ArtifactStore, load_for_tenant, merge_profile
+from hands.catalog import ArtifactStore, latest_version, load_for_tenant, merge_profile
+from hands.catalog.versions import next_minor
 from hands.core.artifact import AppRef, Capability, InputSpec
 from hands.core.log import get_logger, log_failure
 from hands.core.results import RunResult
@@ -191,9 +192,25 @@ def _discovery_summary(request: DiscoverRequest, session: RunSession, outcome: A
 
 
 def _save_artifact(artifacts_dir: Path, capability: Capability, session: RunSession, summary: dict[str, Any]) -> None:
-    written = ArtifactStore(artifacts_dir).save(capability)
+    store = ArtifactStore(artifacts_dir)
+    capability = _unused_version(store, capability)
+    written = store.save(capability)
+    summary["capability"] = f"{capability.id}@{capability.version}"
     summary["artifact_path"] = getattr(written, "path", None)
     session.evidence.write_json("capability", capability)
+
+
+def _unused_version(store: ArtifactStore, capability: Capability) -> Capability:
+    """Never overwrite a recorded capability: a re-discovery becomes the next minor version, as a draft."""
+    existing_versions = store.list_versions(capability.id)
+    if capability.version not in existing_versions:
+        return capability
+    newest = latest_version(existing_versions) or capability.version
+    bumped = next_minor(newest)
+    if bumped is None:
+        log_failure(logger, "_unused_version", "cannot bump version", capability_id=capability.id, version=newest)
+        return capability
+    return capability.model_copy(update={"version": bumped})
 
 
 # ---------------------------------------------------------------- replay
