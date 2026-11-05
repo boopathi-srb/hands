@@ -164,6 +164,22 @@ def catalog_merge_profile_command(
     _emit(catalog_merge_profile(artifacts_dir, capability_id, profile))
 
 
+@app.command()
+def serve(
+    host: str = typer.Option("0.0.0.0", help="API bind address."),
+    port: int | None = typer.Option(None, help="API port; default $PORT, else 8080."),
+    with_target: bool = typer.Option(True, "--with-target/--no-target",
+                                     help="Also run the CoreOne mock app on 127.0.0.1:--target-port."),
+    target_port: int = typer.Option(8700, help="Mock app port (internal only)."),
+) -> None:
+    """Serve the HTTP API, the shared operator console, the built UI, and (by default) the mock app."""
+    from hands.api.serve import ServeConfig, resolve_port
+    from hands.api.serve import serve as serve_api
+
+    config = ServeConfig(host=host, port=resolve_port(port), with_target=with_target, target_port=target_port)
+    raise typer.Exit(asyncio.run(serve_api(config)))
+
+
 @app.command("observe-desktop")
 def observe_desktop(
     bundle_id: str = typer.Argument("com.apple.calculator"),

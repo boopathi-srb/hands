@@ -4,7 +4,8 @@ from __future__ import annotations
 
 import json
 import re
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
@@ -13,17 +14,24 @@ import httpx
 from hands.catalog import ArtifactStore, load_for_tenant, merge_profile
 from hands.core.artifact import AppRef, Capability, InputSpec
 from hands.core.log import get_logger, log_failure
+from hands.core.results import RunResult
 from hands.discovery import DiscoveryAgent, record_capability
+from hands.discovery.trace import DiscoveryOutcome
 from hands.profiles import AppProfile, load_profile
 from hands.replay import ReplayEngine
 from hands.runtime.assembly import RunSession, SessionOptions, build_session
 from hands.runtime.credentials import EnvCredentialProvider
 from hands.runtime.planners import CassetteChoice, PlannerChoice, build_planner
+from hands.surfaces.fake import FakeSurface
+from target_app.faults import MAX_FAULT_COUNT, FaultName
 
 logger = get_logger(__name__)
 
 RESULT_EXIT_CODES = {"success": 0, "business_outcome": 3, "escalated": 4, "failed": 1}
 _DIGITS_ONLY = re.compile(r"^\d+$")
+SLOW_FAULT = FaultName.SLOW.value
+# On the fake surface, `slow` returns the loading screen for this many observations per armed count.
+FAKE_SLOW_OBSERVATIONS_PER_COUNT = 2
 
 
 @dataclass(frozen=True)
@@ -61,27 +69,46 @@ class ReplayRequest:
 
 @dataclass(frozen=True)
 class CommandOutcome:
+    """`summary` is the JSON the CLI prints. `result` is the typed object behind it: the RunResult of a
+    replay or the DiscoveryOutcome of a discovery; None when the command failed before running."""
+
     exit_code: int
     summary: dict[str, Any]
+    result: RunResult | DiscoveryOutcome | None = None
+
+
+@dataclass(frozen=True)
+class FaultSpec:
+    name: str
+    count: int
 
 
 # ---------------------------------------------------------------- discover
 
 
 async def run_discover(request: DiscoverRequest) -> CommandOutcome:
+    started_at = _utc_now_iso()
     profile = _load_profile_or_none(request.profile_path)
     built = await build_session(request.session)
     if built.session is None:
         return _error_outcome("discover", built.error or "session failed")
-    session = built.session
+    try:
+        return await _discover_in_session(request, built.session, profile, started_at)
+    finally:  # the browser and console registration must not outlive a crashed run
+        await built.session.close()
+
+
+async def _discover_in_session(
+    request: DiscoverRequest, session: RunSession, profile: AppProfile | None, started_at: str
+) -> CommandOutcome:
     outcome = await _run_discovery_agent(request, session, profile)
     record = _record(request, outcome, profile)
     summary = _discovery_summary(request, session, outcome, record)
+    summary.update(started_at=started_at, finished_at=_utc_now_iso())
     if record.capability is not None:
         _save_artifact(request.artifacts_dir, record.capability, session, summary)
     session.evidence.write_json("discovery_result.json", summary)
-    await session.close()
-    return CommandOutcome(0 if record.capability is not None else 1, summary)
+    return CommandOutcome(0 if record.capability is not None else 1, summary, outcome)
 
 
 async def _run_discovery_agent(request: DiscoverRequest, session: RunSession, profile: AppProfile | None) -> Any:
@@ -146,6 +173,8 @@ def _discovery_summary(request: DiscoverRequest, session: RunSession, outcome: A
     return {
         "mode": "discovery",
         "run_id": session.options.run_id,
+        "capability_id": request.capability_id,
+        "tenant": request.tenant,
         "planner": request.planner,
         "model": request.model or _default_model(request.planner),
         "status": outcome.status,
@@ -176,22 +205,41 @@ async def run_replay(request: ReplayRequest) -> CommandOutcome:
     if loaded.capability is None:
         return _error_outcome("replay", loaded.error or "capability not found")
     capability = loaded.capability
-    fault_error = await _arm_faults(request.target_url, request.faults, request.tenant)
-    if fault_error is not None:
-        return _error_outcome("replay", fault_error)
+    fault_specs = parse_fault_specs(request.faults)
+    if isinstance(fault_specs, str):
+        return _error_outcome("replay", fault_specs)
+    built = await _build_replay_session(request, capability, fault_specs)
+    if isinstance(built, str):
+        return _error_outcome("replay", built)
+    try:
+        result = await _run_engine(request, built, capability, loaded)
+    finally:  # the browser and console registration must not outlive a crashed run
+        await built.close()
+    store.record_run(capability.id, capability.version, result)
+    summary = json.loads(result.model_dump_json())
+    return CommandOutcome(RESULT_EXIT_CODES.get(result.status, 1), summary, result)
+
+
+async def _build_replay_session(
+    request: ReplayRequest, capability: Capability, fault_specs: list[FaultSpec]
+) -> RunSession | str:
+    """Arm faults (mock app before the session, fake surface after it) and build the session."""
+    on_fake_surface = request.session.surface == "fake"
+    if not on_fake_surface:
+        fault_error = await _arm_faults(request.target_url, fault_specs, request.tenant)
+        if fault_error is not None:
+            return fault_error
     built = await build_session(_with_status(request.session, capability))
     if built.session is None:
-        return _error_outcome("replay", built.error or "session failed")
-    result = await _run_engine(request, built.session, capability, loaded)
-    store.record_run(capability.id, capability.version, result)
-    await built.session.close()
-    summary = json.loads(result.model_dump_json())
-    return CommandOutcome(RESULT_EXIT_CODES.get(result.status, 1), summary)
+        return built.error or "session failed"
+    fake_fault_error = arm_fake_faults(built.session.raw_surface, fault_specs) if on_fake_surface else None
+    if fake_fault_error is not None:
+        await built.session.close()
+        return fake_fault_error
+    return built.session
 
 
 def _with_status(options: SessionOptions, capability: Capability) -> SessionOptions:
-    from dataclasses import replace
-
     return replace(options, capability_status=capability.status)
 
 
@@ -207,11 +255,54 @@ async def _run_engine(request: ReplayRequest, session: RunSession, capability: C
     )
 
 
-async def _arm_faults(target_url: str, faults: list[str], tenant: str | None) -> str | None:
-    """Test harness only: arm mock-app faults out of band. The agent itself is blocked from /_admin."""
+def parse_fault_specs(faults: list[str]) -> list[FaultSpec] | str:
+    """`["session_expired", "slow:2"]` -> FaultSpecs; an error message (logged) for a bad entry."""
+    known_faults = {fault.value for fault in FaultName}
+    parsed: list[FaultSpec] = []
     for fault_spec in faults:
         fault_name, _, count_text = fault_spec.partition(":")
-        payload = {"fault": fault_name, "count": int(count_text or "1"), "tenant": tenant or "*"}
+        count_text = count_text or "1"
+        valid_count = count_text.isascii() and count_text.isdigit() and 1 <= int(count_text) <= MAX_FAULT_COUNT
+        if fault_name not in known_faults or not valid_count:
+            log_failure(logger, "parse_fault_specs", "invalid fault spec", fault_spec=fault_spec)
+            return f"invalid fault '{fault_spec}': expected one of {sorted(known_faults)} with count 1..{MAX_FAULT_COUNT}"
+        parsed.append(FaultSpec(name=fault_name, count=int(count_text)))
+    return parsed
+
+
+def arm_fake_faults(surface: object, faults: list[FaultSpec]) -> str | None:
+    """Test harness on the fake surface: queue fault screens in-process instead of arming the mock app.
+
+    Page faults appear right after the next successful act, the way the mock app shows them on the next load.
+    """
+    if not faults:
+        return None
+    if not isinstance(surface, FakeSurface):
+        log_failure(logger, "arm_fake_faults", "surface is not a FakeSurface", surface=type(surface).__name__)
+        return "faults can only be injected into the fake surface"
+    for fault in faults:
+        error = _inject_fake_fault(surface, fault)
+        if error is not None:
+            return error
+    return None
+
+
+def _inject_fake_fault(surface: FakeSurface, fault: FaultSpec) -> str | None:
+    if fault.name == SLOW_FAULT:
+        surface.delay_observations(fault.count * FAKE_SLOW_OBSERVATIONS_PER_COUNT)
+        return None
+    if fault.name not in surface.screen_names:
+        log_failure(logger, "_inject_fake_fault", "fake surface has no screen for fault", fault=fault.name)
+        return f"the fake surface cannot show fault '{fault.name}'"
+    for _ in range(fault.count):
+        surface.inject_next(fault.name, trigger="act")
+    return None
+
+
+async def _arm_faults(target_url: str, faults: list[FaultSpec], tenant: str | None) -> str | None:
+    """Test harness only: arm mock-app faults out of band. The agent itself is blocked from /_admin."""
+    for fault in faults:
+        payload = {"fault": fault.name, "count": fault.count, "tenant": tenant or "*"}
         error = await _post_fault(target_url, payload)
         if error is not None:
             return error
@@ -255,8 +346,12 @@ def catalog_set_status(artifacts_dir: Path, capability_id: str, version: str | N
     if loaded.capability is None:
         return _error_outcome("catalog", loaded.error or "not found")
     updated = loaded.capability.model_copy(update={"status": status})
-    store.save(Capability.model_validate(updated.model_dump()))
-    return CommandOutcome(0, {"capability": f"{updated.id}@{updated.version}", "status": status})
+    written = store.save(Capability.model_validate(updated.model_dump()))
+    if not written.ok:
+        return _error_outcome("catalog", written.error or "could not save capability")
+    summary = {"capability": f"{updated.id}@{updated.version}", "id": updated.id,
+               "version": updated.version, "status": status}
+    return CommandOutcome(0, summary)
 
 
 def catalog_merge_profile(artifacts_dir: Path, capability_id: str, profile_path: Path) -> CommandOutcome:
@@ -278,6 +373,10 @@ def _load_profile_or_none(profile_path: Path) -> AppProfile | None:
     if loaded.profile is None:
         log_failure(logger, "_load_profile_or_none", loaded.error or "unknown", path=str(profile_path))
     return loaded.profile
+
+
+def _utc_now_iso() -> str:
+    return datetime.now(UTC).isoformat()
 
 
 def _error_outcome(command: str, message: str) -> CommandOutcome:

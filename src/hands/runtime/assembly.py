@@ -17,6 +17,7 @@ from hands.core.ports import Escalator, Surface
 from hands.evidence import EvidenceRecorder
 from hands.policy import YamlPolicyGate, load_policy
 from hands.redact import Redactor
+from hands.runtime.shared_console import SharedConsole
 from hands.session.board import InterventionBoard
 from hands.session.escalation import ConsoleEscalator, ScriptedEscalator
 from hands.session.guarded import GuardedSurface
@@ -45,6 +46,9 @@ class SessionOptions:
     fake_tenant: str = "lakeside"
     # Playwright traces capture typed text verbatim and bypass the redactor, so they are opt-in and local-only.
     record_trace: bool = False
+    fake_base_url: str = "http://127.0.0.1:8700"
+    # Set by a long-lived host (`hands serve`): the run joins its board and console instead of starting its own.
+    shared_console: SharedConsole | None = field(default=None, compare=False, repr=False)
 
 
 @dataclass
@@ -59,6 +63,7 @@ class RunSession:
     surface: GuardedSurface
     escalator: Escalator | None
     console: ConsoleServer | None = None
+    shared_console: SharedConsole | None = None
     notes: list[str] = field(default_factory=list)
 
     @property
@@ -66,9 +71,11 @@ class RunSession:
         return self.options.run_id
 
     async def close(self) -> None:
-        """Stop the console, close the surface (flushing the trace), and write the evidence summary."""
+        """Stop or leave the console, close the surface (flushing the trace), and write the evidence summary."""
         if self.console is not None:
             await self.console.stop()
+        if self.shared_console is not None:
+            self.shared_console.unregister(self.session_id)
         await self.raw_surface.close()
         self.evidence.summary()
 
@@ -118,7 +125,7 @@ async def _launch_surface(options: SessionOptions, evidence: EvidenceRecorder) -
     if options.surface == "fake":
         from hands.surfaces.fake import coreone_fake
 
-        return coreone_fake(options.fake_tenant, base_url="http://127.0.0.1:8700")
+        return coreone_fake(options.fake_tenant, base_url=options.fake_base_url)
     return await _launch_browser(options, evidence)
 
 
@@ -140,7 +147,7 @@ def _assemble(
     policy: YamlPolicyGate,
     raw_surface: Surface,
 ) -> RunSession:
-    board = InterventionBoard()
+    board = options.shared_console.board if options.shared_console is not None else InterventionBoard()
     lease = LeaseManager(options.run_id, interventions=board, evidence=evidence)
     lease.grant_automation(options.run_id, reason=f"{options.mode} run started")
     guarded = GuardedSurface(
@@ -162,16 +169,23 @@ def _build_escalator(session: RunSession) -> Escalator | None:
             session.board, session.lease, session.evidence, outcome=outcome,
             note=f"scripted operator chose {outcome}", surface=session.surface,
         )
-    console_url = f"http://127.0.0.1:{session.options.console_port}"
     return ConsoleEscalator(
-        session.board, session.lease, session.evidence, console_url,
+        session.board, session.lease, session.evidence, _console_url(session.options),
         timeout_s=session.options.escalation_timeout_s,
     )
+
+
+def _console_url(options: SessionOptions) -> str:
+    if options.shared_console is not None:
+        return options.shared_console.operator_url()
+    return f"http://127.0.0.1:{options.console_port}"
 
 
 async def _start_console_if_needed(session: RunSession) -> str | None:
     if session.options.escalation != "console":
         return None
+    if session.options.shared_console is not None:
+        return _join_shared_console(session, session.options.shared_console)
     session_id = session.session_id
     app = create_console_app(
         session.board, {session_id: session.lease}, {session_id: session.surface}, {session_id: session.evidence}
@@ -182,4 +196,13 @@ async def _start_console_if_needed(session: RunSession) -> str | None:
         log_failure(logger, "_start_console_if_needed", started.message, port=session.options.console_port)
         return f"cannot start operator console: {started.message}"
     logger.info("operator console listening at %s", started.url)
+    return None
+
+
+def _join_shared_console(session: RunSession, shared_console: SharedConsole) -> str | None:
+    """Register on the host's console instead of starting a server; the host already serves it."""
+    registered = shared_console.register(session.session_id, session.lease, session.surface, session.evidence)
+    if not registered:
+        return f"session {session.session_id} is already registered on the shared console"
+    session.shared_console = shared_console
     return None
