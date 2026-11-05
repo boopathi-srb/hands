@@ -31,9 +31,9 @@ def _inner_planner(choice: PlannerChoice, model: str | None, tenant: str) -> Pla
 
         return OllamaPlanner(model=model or "qwen3-vl:8b")
     if choice == "anthropic":
-        from hands.discovery.planners.anthropic import AnthropicPlanner
+        from hands.discovery.planners.anthropic import DEFAULT_ANTHROPIC_MODEL, AnthropicPlanner
 
-        return AnthropicPlanner(model=model or "claude-sonnet-5")
+        return AnthropicPlanner(model=model or DEFAULT_ANTHROPIC_MODEL)
     from hands.discovery.planners.scripted import coreone_member_balance_script
 
     return coreone_member_balance_script(tenant)

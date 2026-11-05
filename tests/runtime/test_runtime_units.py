@@ -193,3 +193,13 @@ def test_playwright_traces_are_opt_in() -> None:
     """Traces record typed input verbatim and bypass redaction, so they must never be on by default."""
     options = SessionOptions(mode="replay", run_id="replay-ee", evidence_root=Path("."), policy_path=POLICY)
     assert options.record_trace is False
+
+
+def test_default_models_come_from_planner_constants() -> None:
+    from hands.discovery.planners.anthropic import DEFAULT_ANTHROPIC_MODEL
+    from hands.runtime.commands import _default_model
+
+    assert DEFAULT_ANTHROPIC_MODEL == "claude-sonnet-5-5"
+    assert _default_model("anthropic") == DEFAULT_ANTHROPIC_MODEL
+    assert _default_model("ollama") == "qwen3-vl:8b"
+    assert _default_model("scripted") is None

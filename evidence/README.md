@@ -25,7 +25,14 @@ in headless Chromium, on 2026-09-28. Each run directory under `runs/` holds:
   with `--cassette-mode replay`.
 - An earlier development run on the in-memory fake is in `../cassettes/dev-ollama-fake.jsonl`.
 
-The production run on Claude Sonnet 5 is prepared but not included. See "Not included" below.
+`runs/disc-dd983ef8fe94/` is the **production run on Claude Sonnet 5.5** (`claude-sonnet-5-5`) against the same
+live app. It took 7 decisions, 0 invalid, 27 seconds, and about 10,500 input and 1,500 output tokens, with prompt
+caching active from the first call. Its responses are in `../cassettes/prod-sonnet-5-5-web.jsonl`.
+
+The two models recorded **the same capability**. Apart from provenance, the artifact from Sonnet 5.5
+(`artifact/coreone.member_balance-1.0.0-from-sonnet-5-5.json`) is identical to the one from Qwen, field for field:
+steps, targets, conditions, checkpoint, outcomes, and recoveries. The prairie overlay written for one applies to the
+other. The Sonnet artifact also replays correctly: success, member not found, session-expiry recovery, and prairie.
 
 ## 2. The artifact
 
@@ -82,8 +89,6 @@ console page by hand in a browser during development.
 
 ## Not included, and why
 
-- **Claude Sonnet 5 discovery.** No `ANTHROPIC_API_KEY` was available on the build machine. It is one command
-  away; see the README.
 - **macOS desktop observation.** The terminal was not granted Accessibility permission, and granting it is a manual
   security setting. The desktop surface is unit-tested against a fake AX backend.
 - **Playwright traces.** A secret scan of the evidence found that trace archives record typed input verbatim,

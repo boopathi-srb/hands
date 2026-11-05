@@ -35,8 +35,8 @@ agent call (id + typed inputs) ─► ReplayEngine ◄────────�
   policy gate and the control lease before it reaches the surface.
 - **Built against a weak model.** All discovery development used a local 8B vision model (Qwen3-VL via Ollama). It
   completed the goal on the live app with zero invalid decisions. The loop owns validation, re-prompting, stuck
-  detection, and secret substitution, so a stronger model only helps. Claude Sonnet 5 is wired in for the production
-  run.
+  detection, and secret substitution, so a stronger model only helps. The production run on Claude Sonnet 5.5 took
+  27 seconds instead of about 2 minutes, and recorded an identical artifact.
 - **Trade-off.** Because it is a single process, the operator console shares the run's event loop: it needs the live
   surface object. Remote operators would need a session broker. The transport interface already has that shape.
 
@@ -64,6 +64,9 @@ Source: `src/hands/core/artifact.py` (Pydantic, exports JSON Schema). Example:
 - **Provenance and stats:** discovery run, planner, model, and goal; replay counts and fallback-match counts.
 - **Validators** reject duplicate step ids, undeclared placeholders, outputs that are never extracted, unknown
   recoveries or subflows, and outcome scopes that name missing steps.
+
+The evidence shows the decoupling holds. Qwen3-VL 8B and Claude Sonnet 5.5 discovered the flow independently and
+produced the same artifact, field for field, apart from provenance.
 
 The caller needs a function signature and an error vocabulary. The reviewer needs to see what will be clicked and
 why it will still be found next month. The engine needs to know which screens are answers and which are
@@ -177,8 +180,6 @@ would not change.
 
 ## 7. Cuts
 
-- **Claude Sonnet 5 production run:** implemented and unit-tested with a mocked client, but not run, because no API
-  key was available. It is one command in the README.
 - **Desktop:** implemented and tested against a fake AX backend. A real observation needs Accessibility permission
   for the terminal, which is a manual security setting.
 - **Operator console:** minimal. It has one page, no authentication, and one session.

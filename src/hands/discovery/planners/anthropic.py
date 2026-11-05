@@ -33,7 +33,7 @@ from hands.discovery.render import downscale_screenshot
 
 _logger = get_logger(__name__)
 
-DEFAULT_ANTHROPIC_MODEL = "claude-sonnet-5"
+DEFAULT_ANTHROPIC_MODEL = "claude-sonnet-5-5"
 DEFAULT_EFFORT = "medium"
 DEFAULT_MAX_TOKENS = 16_000
 API_KEY_ENV = "ANTHROPIC_API_KEY"

@@ -39,7 +39,7 @@ The model discovers. The artifact becomes a reusable capability. Deterministic r
 - [x] Phase 3 (parallel): G replay + catalog, H discovery
 - [x] Phase 4a: CLI and runtime composition root, README, REPORT
 - [x] Phase 4b: dev discovery on local Qwen3-VL (fake surface and live web), replay evidence incl. failures, recoveries, escalation, tenant variant
-- [ ] Phase 4c: prod discovery on Claude Sonnet 5 (needs ANTHROPIC_API_KEY)
+- [x] Phase 4c: prod discovery on Claude Sonnet 5.5 (identical artifact to the Qwen run)
 - [ ] Phase 4d: desktop observation evidence (needs macOS Accessibility permission for the terminal)
 
 ## Mock target: CoreOne Member Services

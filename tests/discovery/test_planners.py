@@ -229,7 +229,7 @@ async def test_anthropic_parses_act_tool_use_and_builds_request() -> None:
     assert response.decision.node_ref == "n4"
     assert response.usage.cache_read_input_tokens == 800
     request = client.messages.requests[0]
-    assert request["model"] == "claude-sonnet-5"
+    assert request["model"] == "claude-sonnet-5-5"
     assert request["thinking"] == {"type": "adaptive"}
     assert request["output_config"] == {"effort": "medium"}
     assert request["tool_choice"] == {"type": "auto"}

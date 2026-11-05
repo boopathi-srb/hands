@@ -1,0 +1,1252 @@
+{
+  "observed_at": "2026-11-05T02:13:58.109284Z",
+  "location": {
+    "kind": "url",
+    "value": "http://127.0.0.1:8700/t/lakeside/main",
+    "title": "Lakeside Community CU - CoreOne Member Services"
+  },
+  "nodes": [
+    {
+      "ref": "n1",
+      "role": "table",
+      "name": "",
+      "text": "",
+      "value": null,
+      "label": null,
+      "container_path": [
+        "frame:top"
+      ],
+      "structural_path": "table[1]",
+      "bounds": {
+        "x": 0.0,
+        "y": 0.0,
+        "width": 1280.0,
+        "height": 62.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n2",
+      "role": "row",
+      "name": "",
+      "text": "",
+      "value": null,
+      "label": null,
+      "container_path": [
+        "frame:top"
+      ],
+      "structural_path": "table[1]/row[1]",
+      "bounds": {
+        "x": 0.0,
+        "y": 0.0,
+        "width": 1280.0,
+        "height": 62.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n3",
+      "role": "cell",
+      "name": "Lakeside Community CU CoreOne Member Services 7.4",
+      "text": "Lakeside Community CU CoreOne Member Services 7.4",
+      "value": null,
+      "label": null,
+      "container_path": [
+        "frame:top"
+      ],
+      "structural_path": "table[1]/row[1]/cell[1]",
+      "bounds": {
+        "x": 0.0,
+        "y": 0.0,
+        "width": 701.15625,
+        "height": 62.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n4",
+      "role": "cell",
+      "name": "Signed on as ••••",
+      "text": "Signed on as ••••",
+      "value": null,
+      "label": null,
+      "container_path": [
+        "frame:top"
+      ],
+      "structural_path": "table[1]/row[1]/cell[2]",
+      "bounds": {
+        "x": 701.15625,
+        "y": 0.0,
+        "width": 578.84375,
+        "height": 62.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n5",
+      "role": "link",
+      "name": "Sign Off",
+      "text": "Sign Off",
+      "value": null,
+      "label": null,
+      "container_path": [
+        "frame:top"
+      ],
+      "structural_path": "table[1]/row[1]/cell[2]/link[1]",
+      "bounds": {
+        "x": 1225.265625,
+        "y": 22.0,
+        "width": 46.734375,
+        "height": 18.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n6",
+      "role": "table",
+      "name": "",
+      "text": "",
+      "value": null,
+      "label": null,
+      "container_path": [
+        "frame:nav"
+      ],
+      "structural_path": "table[1]",
+      "bounds": {
+        "x": 0.0,
+        "y": 65.0,
+        "width": 190.0,
+        "height": 321.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n7",
+      "role": "row",
+      "name": "",
+      "text": "",
+      "value": null,
+      "label": null,
+      "container_path": [
+        "frame:nav"
+      ],
+      "structural_path": "table[1]/row[1]",
+      "bounds": {
+        "x": 0.0,
+        "y": 65.0,
+        "width": 190.0,
+        "height": 25.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n8",
+      "role": "cell",
+      "name": "Functions",
+      "text": "Functions",
+      "value": null,
+      "label": null,
+      "container_path": [
+        "frame:nav"
+      ],
+      "structural_path": "table[1]/row[1]/cell[1]",
+      "bounds": {
+        "x": 0.0,
+        "y": 65.0,
+        "width": 190.0,
+        "height": 25.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n9",
+      "role": "row",
+      "name": "",
+      "text": "",
+      "value": null,
+      "label": null,
+      "container_path": [
+        "frame:nav"
+      ],
+      "structural_path": "table[1]/row[2]",
+      "bounds": {
+        "x": 0.0,
+        "y": 90.0,
+        "width": 190.0,
+        "height": 25.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n10",
+      "role": "cell",
+      "name": "»",
+      "text": "»",
+      "value": null,
+      "label": null,
+      "container_path": [
+        "frame:nav"
+      ],
+      "structural_path": "table[1]/row[2]/cell[1]",
+      "bounds": {
+        "x": 0.0,
+        "y": 90.0,
+        "width": 190.0,
+        "height": 25.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n11",
+      "role": "link",
+      "name": "Member Inquiry",
+      "text": "Member Inquiry",
+      "value": null,
+      "label": null,
+      "container_path": [
+        "frame:nav"
+      ],
+      "structural_path": "table[1]/row[2]/cell[1]/link[1]",
+      "bounds": {
+        "x": 15.84375,
+        "y": 95.0,
+        "width": 90.3125,
+        "height": 15.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n12",
+      "role": "row",
+      "name": "",
+      "text": "",
+      "value": null,
+      "label": null,
+      "container_path": [
+        "frame:nav"
+      ],
+      "structural_path": "table[1]/row[3]",
+      "bounds": {
+        "x": 0.0,
+        "y": 115.0,
+        "width": 190.0,
+        "height": 25.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n13",
+      "role": "cell",
+      "name": "»",
+      "text": "»",
+      "value": null,
+      "label": null,
+      "container_path": [
+        "frame:nav"
+      ],
+      "structural_path": "table[1]/row[3]/cell[1]",
+      "bounds": {
+        "x": 0.0,
+        "y": 115.0,
+        "width": 190.0,
+        "height": 25.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n14",
+      "role": "link",
+      "name": "Open Share Account",
+      "text": "Open Share Account",
+      "value": null,
+      "label": null,
+      "container_path": [
+        "frame:nav"
+      ],
+      "structural_path": "table[1]/row[3]/cell[1]/link[1]",
+      "bounds": {
+        "x": 15.84375,
+        "y": 120.0,
+        "width": 119.984375,
+        "height": 15.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n15",
+      "role": "row",
+      "name": "",
+      "text": "",
+      "value": null,
+      "label": null,
+      "container_path": [
+        "frame:nav"
+      ],
+      "structural_path": "table[1]/row[4]",
+      "bounds": {
+        "x": 0.0,
+        "y": 140.0,
+        "width": 190.0,
+        "height": 25.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n16",
+      "role": "cell",
+      "name": "»",
+      "text": "»",
+      "value": null,
+      "label": null,
+      "container_path": [
+        "frame:nav"
+      ],
+      "structural_path": "table[1]/row[4]/cell[1]",
+      "bounds": {
+        "x": 0.0,
+        "y": 140.0,
+        "width": 190.0,
+        "height": 25.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n17",
+      "role": "link",
+      "name": "Reports",
+      "text": "Reports",
+      "value": null,
+      "label": null,
+      "container_path": [
+        "frame:nav"
+      ],
+      "structural_path": "table[1]/row[4]/cell[1]/link[1]",
+      "bounds": {
+        "x": 15.84375,
+        "y": 145.0,
+        "width": 45.53125,
+        "height": 15.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n18",
+      "role": "row",
+      "name": "",
+      "text": "",
+      "value": null,
+      "label": null,
+      "container_path": [
+        "frame:nav"
+      ],
+      "structural_path": "table[1]/row[5]",
+      "bounds": {
+        "x": 0.0,
+        "y": 165.0,
+        "width": 190.0,
+        "height": 200.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n19",
+      "role": "cell",
+      "name": "",
+      "text": "",
+      "value": null,
+      "label": null,
+      "container_path": [
+        "frame:nav"
+      ],
+      "structural_path": "table[1]/row[5]/cell[1]",
+      "bounds": {
+        "x": 0.0,
+        "y": 165.0,
+        "width": 190.0,
+        "height": 200.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n20",
+      "role": "row",
+      "name": "",
+      "text": "",
+      "value": null,
+      "label": null,
+      "container_path": [
+        "frame:nav"
+      ],
+      "structural_path": "table[1]/row[6]",
+      "bounds": {
+        "x": 0.0,
+        "y": 365.0,
+        "width": 190.0,
+        "height": 21.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n21",
+      "role": "cell",
+      "name": "Northwind Core Systems",
+      "text": "Northwind Core Systems",
+      "value": null,
+      "label": null,
+      "container_path": [
+        "frame:nav"
+      ],
+      "structural_path": "table[1]/row[6]/cell[1]",
+      "bounds": {
+        "x": 0.0,
+        "y": 365.0,
+        "width": 190.0,
+        "height": 21.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n22",
+      "role": "table",
+      "name": "",
+      "text": "",
+      "value": null,
+      "label": null,
+      "container_path": [
+        "frame:content"
+      ],
+      "structural_path": "table[1]",
+      "bounds": {
+        "x": 191.0,
+        "y": 65.0,
+        "width": 1089.0,
+        "height": 30.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n23",
+      "role": "row",
+      "name": "",
+      "text": "",
+      "value": null,
+      "label": null,
+      "container_path": [
+        "frame:content"
+      ],
+      "structural_path": "table[1]/row[1]",
+      "bounds": {
+        "x": 191.0,
+        "y": 65.0,
+        "width": 1089.0,
+        "height": 24.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n24",
+      "role": "cell",
+      "name": "Member Detail",
+      "text": "Member Detail",
+      "value": null,
+      "label": null,
+      "container_path": [
+        "frame:content"
+      ],
+      "structural_path": "table[1]/row[1]/cell[1]",
+      "bounds": {
+        "x": 191.0,
+        "y": 65.0,
+        "width": 1089.0,
+        "height": 24.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n25",
+      "role": "row",
+      "name": "",
+      "text": "",
+      "value": null,
+      "label": null,
+      "container_path": [
+        "frame:content"
+      ],
+      "structural_path": "table[1]/row[2]",
+      "bounds": {
+        "x": 191.0,
+        "y": 89.0,
+        "width": 1089.0,
+        "height": 6.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n26",
+      "role": "cell",
+      "name": "",
+      "text": "",
+      "value": null,
+      "label": null,
+      "container_path": [
+        "frame:content"
+      ],
+      "structural_path": "table[1]/row[2]/cell[1]",
+      "bounds": {
+        "x": 191.0,
+        "y": 89.0,
+        "width": 1089.0,
+        "height": 6.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n27",
+      "role": "table",
+      "name": "",
+      "text": "",
+      "value": null,
+      "label": null,
+      "container_path": [
+        "frame:content"
+      ],
+      "structural_path": "table[2]",
+      "bounds": {
+        "x": 191.0,
+        "y": 113.0,
+        "width": 180.828125,
+        "height": 63.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n28",
+      "role": "row",
+      "name": "",
+      "text": "",
+      "value": null,
+      "label": null,
+      "container_path": [
+        "frame:content"
+      ],
+      "structural_path": "table[2]/row[1]",
+      "bounds": {
+        "x": 191.0,
+        "y": 113.0,
+        "width": 180.828125,
+        "height": 21.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n29",
+      "role": "cell",
+      "name": "Member Number",
+      "text": "Member Number",
+      "value": null,
+      "label": null,
+      "container_path": [
+        "frame:content"
+      ],
+      "structural_path": "table[2]/row[1]/cell[1]",
+      "bounds": {
+        "x": 191.0,
+        "y": 113.0,
+        "width": 103.53125,
+        "height": 21.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n30",
+      "role": "cell",
+      "name": "10001",
+      "text": "10001",
+      "value": null,
+      "label": null,
+      "container_path": [
+        "frame:content"
+      ],
+      "structural_path": "table[2]/row[1]/cell[2]",
+      "bounds": {
+        "x": 294.53125,
+        "y": 113.0,
+        "width": 77.296875,
+        "height": 21.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n31",
+      "role": "row",
+      "name": "",
+      "text": "",
+      "value": null,
+      "label": null,
+      "container_path": [
+        "frame:content"
+      ],
+      "structural_path": "table[2]/row[2]",
+      "bounds": {
+        "x": 191.0,
+        "y": 134.0,
+        "width": 180.828125,
+        "height": 21.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n32",
+      "role": "cell",
+      "name": "Name",
+      "text": "Name",
+      "value": null,
+      "label": null,
+      "container_path": [
+        "frame:content"
+      ],
+      "structural_path": "table[2]/row[2]/cell[1]",
+      "bounds": {
+        "x": 191.0,
+        "y": 134.0,
+        "width": 103.53125,
+        "height": 21.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n33",
+      "role": "cell",
+      "name": "Avery Quinn",
+      "text": "Avery Quinn",
+      "value": null,
+      "label": null,
+      "container_path": [
+        "frame:content"
+      ],
+      "structural_path": "table[2]/row[2]/cell[2]",
+      "bounds": {
+        "x": 294.53125,
+        "y": 134.0,
+        "width": 77.296875,
+        "height": 21.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n34",
+      "role": "row",
+      "name": "",
+      "text": "",
+      "value": null,
+      "label": null,
+      "container_path": [
+        "frame:content"
+      ],
+      "structural_path": "table[2]/row[3]",
+      "bounds": {
+        "x": 191.0,
+        "y": 155.0,
+        "width": 180.828125,
+        "height": 21.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n35",
+      "role": "cell",
+      "name": "Status",
+      "text": "Status",
+      "value": null,
+      "label": null,
+      "container_path": [
+        "frame:content"
+      ],
+      "structural_path": "table[2]/row[3]/cell[1]",
+      "bounds": {
+        "x": 191.0,
+        "y": 155.0,
+        "width": 103.53125,
+        "height": 21.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n36",
+      "role": "cell",
+      "name": "Active",
+      "text": "Active",
+      "value": null,
+      "label": null,
+      "container_path": [
+        "frame:content"
+      ],
+      "structural_path": "table[2]/row[3]/cell[2]",
+      "bounds": {
+        "x": 294.53125,
+        "y": 155.0,
+        "width": 77.296875,
+        "height": 21.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n37",
+      "role": "table",
+      "name": "",
+      "text": "",
+      "value": null,
+      "label": null,
+      "container_path": [
+        "frame:content"
+      ],
+      "structural_path": "table[3]",
+      "bounds": {
+        "x": 191.0,
+        "y": 194.0,
+        "width": 59.375,
+        "height": 24.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n38",
+      "role": "row",
+      "name": "",
+      "text": "",
+      "value": null,
+      "label": null,
+      "container_path": [
+        "frame:content"
+      ],
+      "structural_path": "table[3]/row[1]",
+      "bounds": {
+        "x": 191.0,
+        "y": 194.0,
+        "width": 59.375,
+        "height": 24.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n39",
+      "role": "cell",
+      "name": "Shares",
+      "text": "Shares",
+      "value": null,
+      "label": null,
+      "container_path": [
+        "frame:content"
+      ],
+      "structural_path": "table[3]/row[1]/cell[1]",
+      "bounds": {
+        "x": 191.0,
+        "y": 194.0,
+        "width": 59.375,
+        "height": 24.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n40",
+      "role": "table",
+      "name": "",
+      "text": "",
+      "value": null,
+      "label": null,
+      "container_path": [
+        "frame:content"
+      ],
+      "structural_path": "table[4]",
+      "bounds": {
+        "x": 191.0,
+        "y": 218.0,
+        "width": 336.625,
+        "height": 102.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n41",
+      "role": "row",
+      "name": "",
+      "text": "",
+      "value": null,
+      "label": null,
+      "container_path": [
+        "frame:content"
+      ],
+      "structural_path": "table[4]/row[1]",
+      "bounds": {
+        "x": 192.0,
+        "y": 219.0,
+        "width": 334.625,
+        "height": 25.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n42",
+      "role": "cell",
+      "name": "Share ID",
+      "text": "Share ID",
+      "value": null,
+      "label": null,
+      "container_path": [
+        "frame:content"
+      ],
+      "structural_path": "table[4]/row[1]/cell[1]",
+      "bounds": {
+        "x": 192.0,
+        "y": 219.0,
+        "width": 62.75,
+        "height": 25.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n43",
+      "role": "cell",
+      "name": "Description",
+      "text": "Description",
+      "value": null,
+      "label": null,
+      "container_path": [
+        "frame:content"
+      ],
+      "structural_path": "table[4]/row[1]/cell[2]",
+      "bounds": {
+        "x": 254.75,
+        "y": 219.0,
+        "width": 127.03125,
+        "height": 25.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n44",
+      "role": "cell",
+      "name": "Balance",
+      "text": "Balance",
+      "value": null,
+      "label": null,
+      "container_path": [
+        "frame:content"
+      ],
+      "structural_path": "table[4]/row[1]/cell[3]",
+      "bounds": {
+        "x": 381.78125,
+        "y": 219.0,
+        "width": 72.421875,
+        "height": 25.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n45",
+      "role": "cell",
+      "name": "Available",
+      "text": "Available",
+      "value": null,
+      "label": null,
+      "container_path": [
+        "frame:content"
+      ],
+      "structural_path": "table[4]/row[1]/cell[4]",
+      "bounds": {
+        "x": 454.203125,
+        "y": 219.0,
+        "width": 72.421875,
+        "height": 25.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n46",
+      "role": "row",
+      "name": "",
+      "text": "",
+      "value": null,
+      "label": null,
+      "container_path": [
+        "frame:content"
+      ],
+      "structural_path": "table[4]/row[2]",
+      "bounds": {
+        "x": 192.0,
+        "y": 244.0,
+        "width": 334.625,
+        "height": 25.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n47",
+      "role": "cell",
+      "name": "0001",
+      "text": "0001",
+      "value": null,
+      "label": null,
+      "container_path": [
+        "frame:content"
+      ],
+      "structural_path": "table[4]/row[2]/cell[1]",
+      "bounds": {
+        "x": 192.0,
+        "y": 244.0,
+        "width": 62.75,
+        "height": 25.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n48",
+      "role": "cell",
+      "name": "Regular Savings",
+      "text": "Regular Savings",
+      "value": null,
+      "label": null,
+      "container_path": [
+        "frame:content"
+      ],
+      "structural_path": "table[4]/row[2]/cell[2]",
+      "bounds": {
+        "x": 254.75,
+        "y": 244.0,
+        "width": 127.03125,
+        "height": 25.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n49",
+      "role": "cell",
+      "name": "1,250.00",
+      "text": "1,250.00",
+      "value": null,
+      "label": null,
+      "container_path": [
+        "frame:content"
+      ],
+      "structural_path": "table[4]/row[2]/cell[3]",
+      "bounds": {
+        "x": 381.78125,
+        "y": 244.0,
+        "width": 72.421875,
+        "height": 25.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n50",
+      "role": "cell",
+      "name": "1,250.00",
+      "text": "1,250.00",
+      "value": null,
+      "label": null,
+      "container_path": [
+        "frame:content"
+      ],
+      "structural_path": "table[4]/row[2]/cell[4]",
+      "bounds": {
+        "x": 454.203125,
+        "y": 244.0,
+        "width": 72.421875,
+        "height": 25.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n51",
+      "role": "row",
+      "name": "",
+      "text": "",
+      "value": null,
+      "label": null,
+      "container_path": [
+        "frame:content"
+      ],
+      "structural_path": "table[4]/row[3]",
+      "bounds": {
+        "x": 192.0,
+        "y": 269.0,
+        "width": 334.625,
+        "height": 25.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n52",
+      "role": "cell",
+      "name": "0009",
+      "text": "0009",
+      "value": null,
+      "label": null,
+      "container_path": [
+        "frame:content"
+      ],
+      "structural_path": "table[4]/row[3]/cell[1]",
+      "bounds": {
+        "x": 192.0,
+        "y": 269.0,
+        "width": 62.75,
+        "height": 25.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n53",
+      "role": "cell",
+      "name": "Checking",
+      "text": "Checking",
+      "value": null,
+      "label": null,
+      "container_path": [
+        "frame:content"
+      ],
+      "structural_path": "table[4]/row[3]/cell[2]",
+      "bounds": {
+        "x": 254.75,
+        "y": 269.0,
+        "width": 127.03125,
+        "height": 25.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n54",
+      "role": "cell",
+      "name": "310.45",
+      "text": "310.45",
+      "value": null,
+      "label": null,
+      "container_path": [
+        "frame:content"
+      ],
+      "structural_path": "table[4]/row[3]/cell[3]",
+      "bounds": {
+        "x": 381.78125,
+        "y": 269.0,
+        "width": 72.421875,
+        "height": 25.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n55",
+      "role": "cell",
+      "name": "310.45",
+      "text": "310.45",
+      "value": null,
+      "label": null,
+      "container_path": [
+        "frame:content"
+      ],
+      "structural_path": "table[4]/row[3]/cell[4]",
+      "bounds": {
+        "x": 454.203125,
+        "y": 269.0,
+        "width": 72.421875,
+        "height": 25.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n56",
+      "role": "row",
+      "name": "",
+      "text": "",
+      "value": null,
+      "label": null,
+      "container_path": [
+        "frame:content"
+      ],
+      "structural_path": "table[4]/row[4]",
+      "bounds": {
+        "x": 192.0,
+        "y": 294.0,
+        "width": 334.625,
+        "height": 25.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n57",
+      "role": "cell",
+      "name": "0060",
+      "text": "0060",
+      "value": null,
+      "label": null,
+      "container_path": [
+        "frame:content"
+      ],
+      "structural_path": "table[4]/row[4]/cell[1]",
+      "bounds": {
+        "x": 192.0,
+        "y": 294.0,
+        "width": 62.75,
+        "height": 25.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n58",
+      "role": "cell",
+      "name": "Holiday Club",
+      "text": "Holiday Club",
+      "value": null,
+      "label": null,
+      "container_path": [
+        "frame:content"
+      ],
+      "structural_path": "table[4]/row[4]/cell[2]",
+      "bounds": {
+        "x": 254.75,
+        "y": 294.0,
+        "width": 127.03125,
+        "height": 25.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n59",
+      "role": "cell",
+      "name": "85.00",
+      "text": "85.00",
+      "value": null,
+      "label": null,
+      "container_path": [
+        "frame:content"
+      ],
+      "structural_path": "table[4]/row[4]/cell[3]",
+      "bounds": {
+        "x": 381.78125,
+        "y": 294.0,
+        "width": 72.421875,
+        "height": 25.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n60",
+      "role": "cell",
+      "name": "0.00",
+      "text": "0.00",
+      "value": null,
+      "label": null,
+      "container_path": [
+        "frame:content"
+      ],
+      "structural_path": "table[4]/row[4]/cell[4]",
+      "bounds": {
+        "x": 454.203125,
+        "y": 294.0,
+        "width": 72.421875,
+        "height": 25.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n61",
+      "role": "button",
+      "name": "Open Share Account",
+      "text": "Open Share Account",
+      "value": null,
+      "label": null,
+      "container_path": [
+        "frame:content"
+      ],
+      "structural_path": "button[1]",
+      "bounds": {
+        "x": 195.0,
+        "y": 338.0,
+        "width": 139.03125,
+        "height": 21.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n62",
+      "role": "button",
+      "name": "New Inquiry",
+      "text": "New Inquiry",
+      "value": null,
+      "label": null,
+      "container_path": [
+        "frame:content"
+      ],
+      "structural_path": "button[2]",
+      "bounds": {
+        "x": 342.03125,
+        "y": 338.0,
+        "width": 86.390625,
+        "height": 21.0
+      },
+      "enabled": true,
+      "focused": false
+    }
+  ],
+  "dialogs": [],
+  "fingerprint": "b1f3fbf77108d60f"
+}

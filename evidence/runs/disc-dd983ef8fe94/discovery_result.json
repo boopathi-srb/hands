@@ -1,0 +1,19 @@
+{
+  "mode": "discovery",
+  "run_id": "disc-dd983ef8fe94",
+  "planner": "anthropic",
+  "model": "claude-sonnet-5-5",
+  "status": "completed",
+  "reason": "Savings balance already extracted.",
+  "steps": 7,
+  "planner_calls": 7,
+  "invalid_decisions": 0,
+  "extracted": {
+    "savings_balance": "1,250.00"
+  },
+  "capability": "coreone.member_balance@1.0.0",
+  "record_error": null,
+  "record_warnings": [],
+  "evidence_dir": "evidence/runs/disc-dd983ef8fe94",
+  "artifact_path": "/private/tmp/claude-501/-Users-rathinaboopathi-Desktop-SRB/b5c746de-b23a-44d9-982c-ea62bea15219/scratchpad/prod_artifacts/coreone.member_balance/1.0.0.json"
+}

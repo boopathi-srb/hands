@@ -1,0 +1,354 @@
+{
+  "observed_at": "2026-11-05T02:13:37.426175Z",
+  "location": {
+    "kind": "url",
+    "value": "http://127.0.0.1:8700/t/lakeside/login",
+    "title": "Lakeside Community CU - Sign On"
+  },
+  "nodes": [
+    {
+      "ref": "n1",
+      "role": "table",
+      "name": "",
+      "text": "",
+      "value": null,
+      "label": null,
+      "container_path": [],
+      "structural_path": "table[1]",
+      "bounds": {
+        "x": 0.0,
+        "y": 0.0,
+        "width": 1280.0,
+        "height": 55.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n2",
+      "role": "row",
+      "name": "",
+      "text": "",
+      "value": null,
+      "label": null,
+      "container_path": [],
+      "structural_path": "table[1]/row[1]",
+      "bounds": {
+        "x": 0.0,
+        "y": 0.0,
+        "width": 1280.0,
+        "height": 44.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n3",
+      "role": "cell",
+      "name": "Lakeside Community CU",
+      "text": "Lakeside Community CU",
+      "value": null,
+      "label": null,
+      "container_path": [],
+      "structural_path": "table[1]/row[1]/cell[1]",
+      "bounds": {
+        "x": 0.0,
+        "y": 0.0,
+        "width": 1280.0,
+        "height": 44.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n4",
+      "role": "row",
+      "name": "",
+      "text": "",
+      "value": null,
+      "label": null,
+      "container_path": [],
+      "structural_path": "table[1]/row[2]",
+      "bounds": {
+        "x": 0.0,
+        "y": 44.0,
+        "width": 1280.0,
+        "height": 11.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n5",
+      "role": "cell",
+      "name": "CoreOne Member Services 7.4 · Northwind Core Systems",
+      "text": "CoreOne Member Services 7.4 · Northwind Core Systems",
+      "value": null,
+      "label": null,
+      "container_path": [],
+      "structural_path": "table[1]/row[2]/cell[1]",
+      "bounds": {
+        "x": 0.0,
+        "y": 44.0,
+        "width": 1280.0,
+        "height": 11.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n6",
+      "role": "form",
+      "name": "",
+      "text": "",
+      "value": null,
+      "label": null,
+      "container_path": [],
+      "structural_path": "form[1]",
+      "bounds": {
+        "x": 0.0,
+        "y": 91.0,
+        "width": 1280.0,
+        "height": 136.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n7",
+      "role": "table",
+      "name": "",
+      "text": "",
+      "value": null,
+      "label": null,
+      "container_path": [],
+      "structural_path": "form[1]/table[1]",
+      "bounds": {
+        "x": 460.0,
+        "y": 91.0,
+        "width": 360.0,
+        "height": 136.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n8",
+      "role": "row",
+      "name": "",
+      "text": "",
+      "value": null,
+      "label": null,
+      "container_path": [],
+      "structural_path": "form[1]/table[1]/row[1]",
+      "bounds": {
+        "x": 461.0,
+        "y": 92.0,
+        "width": 358.0,
+        "height": 29.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n9",
+      "role": "cell",
+      "name": "Teller Sign On",
+      "text": "Teller Sign On",
+      "value": null,
+      "label": null,
+      "container_path": [],
+      "structural_path": "form[1]/table[1]/row[1]/cell[1]",
+      "bounds": {
+        "x": 461.0,
+        "y": 92.0,
+        "width": 358.0,
+        "height": 29.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n10",
+      "role": "row",
+      "name": "",
+      "text": "",
+      "value": null,
+      "label": null,
+      "container_path": [],
+      "structural_path": "form[1]/table[1]/row[2]",
+      "bounds": {
+        "x": 461.0,
+        "y": 121.0,
+        "width": 358.0,
+        "height": 35.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n11",
+      "role": "cell",
+      "name": "User ID",
+      "text": "User ID",
+      "value": null,
+      "label": null,
+      "container_path": [],
+      "structural_path": "form[1]/table[1]/row[2]/cell[1]",
+      "bounds": {
+        "x": 461.0,
+        "y": 121.0,
+        "width": 358.0,
+        "height": 35.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n12",
+      "role": "textbox",
+      "name": "User ID",
+      "text": "",
+      "value": null,
+      "label": "User ID",
+      "container_path": [],
+      "structural_path": "form[1]/table[1]/row[2]/cell[1]/textbox[1]",
+      "bounds": {
+        "x": 673.0,
+        "y": 128.0,
+        "width": 139.0,
+        "height": 21.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n13",
+      "role": "row",
+      "name": "",
+      "text": "",
+      "value": null,
+      "label": null,
+      "container_path": [],
+      "structural_path": "form[1]/table[1]/row[3]",
+      "bounds": {
+        "x": 461.0,
+        "y": 156.0,
+        "width": 358.0,
+        "height": 35.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n14",
+      "role": "cell",
+      "name": "Password",
+      "text": "Password",
+      "value": null,
+      "label": null,
+      "container_path": [],
+      "structural_path": "form[1]/table[1]/row[3]/cell[1]",
+      "bounds": {
+        "x": 461.0,
+        "y": 156.0,
+        "width": 358.0,
+        "height": 35.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n15",
+      "role": "textbox",
+      "name": "Password",
+      "text": "",
+      "value": null,
+      "label": "Password",
+      "container_path": [],
+      "structural_path": "form[1]/table[1]/row[3]/cell[1]/textbox[1]",
+      "bounds": {
+        "x": 673.0,
+        "y": 163.0,
+        "width": 139.0,
+        "height": 21.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n16",
+      "role": "row",
+      "name": "",
+      "text": "",
+      "value": null,
+      "label": null,
+      "container_path": [],
+      "structural_path": "form[1]/table[1]/row[4]",
+      "bounds": {
+        "x": 461.0,
+        "y": 191.0,
+        "width": 358.0,
+        "height": 35.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n17",
+      "role": "cell",
+      "name": "",
+      "text": "",
+      "value": null,
+      "label": null,
+      "container_path": [],
+      "structural_path": "form[1]/table[1]/row[4]/cell[1]",
+      "bounds": {
+        "x": 461.0,
+        "y": 191.0,
+        "width": 358.0,
+        "height": 35.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n18",
+      "role": "button",
+      "name": "Sign On",
+      "text": "Sign On",
+      "value": null,
+      "label": null,
+      "container_path": [],
+      "structural_path": "form[1]/table[1]/row[4]/cell[1]/button[1]",
+      "bounds": {
+        "x": 607.90625,
+        "y": 198.0,
+        "width": 64.171875,
+        "height": 21.0
+      },
+      "enabled": true,
+      "focused": false
+    },
+    {
+      "ref": "n19",
+      "role": "text",
+      "name": "Authorized personnel only. All activity is logged.",
+      "text": "Authorized personnel only. All activity is logged.",
+      "value": null,
+      "label": null,
+      "container_path": [],
+      "structural_path": "text[1]",
+      "bounds": {
+        "x": 535.03125,
+        "y": 243.0,
+        "width": 209.9375,
+        "height": 11.0
+      },
+      "enabled": true,
+      "focused": false
+    }
+  ],
+  "dialogs": [],
+  "fingerprint": "283fe66fc53ac71f"
+}

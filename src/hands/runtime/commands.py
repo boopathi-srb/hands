@@ -135,7 +135,10 @@ def _infer_input_spec(name: str, value: str, sensitive: bool) -> InputSpec:
 
 
 def _default_model(planner: PlannerChoice) -> str | None:
-    return {"ollama": "qwen3-vl:8b", "anthropic": "claude-sonnet-5", "scripted": None}[planner]
+    from hands.discovery.planners.anthropic import DEFAULT_ANTHROPIC_MODEL
+    from hands.discovery.planners.ollama import DEFAULT_OLLAMA_MODEL
+
+    return {"ollama": DEFAULT_OLLAMA_MODEL, "anthropic": DEFAULT_ANTHROPIC_MODEL, "scripted": None}[planner]
 
 
 def _discovery_summary(request: DiscoverRequest, session: RunSession, outcome: Any, record: Any) -> dict[str, Any]:

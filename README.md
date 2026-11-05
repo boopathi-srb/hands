@@ -25,7 +25,7 @@ Optional, only for the planners you use:
 |---|---|
 | `scripted` | nothing; offline and deterministic |
 | `ollama` (development) | [Ollama](https://ollama.com) running, then `ollama pull qwen3-vl:8b` |
-| `anthropic` (production run) | `ANTHROPIC_API_KEY` in the environment |
+| `anthropic` (production run, Claude Sonnet 5.5 by default) | `ANTHROPIC_API_KEY` in the environment |
 
 The macOS desktop surface also needs `uv sync --extra dev --extra desktop` and Accessibility permission for your
 terminal (System Settings, Privacy & Security, Accessibility).
@@ -50,11 +50,12 @@ Members: `10001` and `10002` exist, `40300` is restricted, anything else is not 
 uv run hands discover "Look up member {{member_number}} in CoreOne and return the balance of their savings share as savings_balance." -i member_number=10001 --planner ollama
 ```
 
-This is the development planner: a local 8B model. For the production run on Claude Sonnet 5, set
-`ANTHROPIC_API_KEY` and record the model's responses so the run can be re-played offline:
+This is the development planner: a local 8B model. For the production run on Claude Sonnet 5.5, put
+`ANTHROPIC_API_KEY` in `.env` (git-ignored), load it, and record the model's responses so the run can be replayed
+offline:
 
 ```bash
-uv run hands discover "Look up member {{member_number}} in CoreOne and return the balance of their savings share as savings_balance." -i member_number=10001 --planner anthropic --cassette cassettes/prod-sonnet-web.jsonl --cassette-mode record --evidence-root evidence/runs
+set -a && source .env && set +a && uv run hands discover "Look up member {{member_number}} in CoreOne and return the balance of their savings share as savings_balance." -i member_number=10001 --planner anthropic --cassette cassettes/prod-sonnet-5-5-web.jsonl --cassette-mode record --evidence-root evidence/runs
 ```
 
 `--planner scripted` runs offline with no model. Add `--headed` to watch the browser.
