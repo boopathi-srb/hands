@@ -1,0 +1,514 @@
+{
+ "success": {
+  "run_id": "replay-0b683ecc08a5",
+  "capability_id": "coreone.member_balance",
+  "capability_version": "1.0.0",
+  "tenant_id": null,
+  "started_at": "2026-09-28T17:50:27.094398Z",
+  "finished_at": "2026-09-28T17:50:31.992866Z",
+  "steps": [
+   {
+    "step_id": "login_open",
+    "status": "ok",
+    "matched_candidate_rank": null,
+    "matched_candidate_kind": null,
+    "recoveries_applied": [],
+    "duration_ms": 1417,
+    "fingerprint": "e3b0c44298fc1c14"
+   },
+   {
+    "step_id": "login_user",
+    "status": "ok",
+    "matched_candidate_rank": 0,
+    "matched_candidate_kind": "label",
+    "recoveries_applied": [],
+    "duration_ms": 228,
+    "fingerprint": "283fe66fc53ac71f"
+   },
+   {
+    "step_id": "login_password",
+    "status": "ok",
+    "matched_candidate_rank": 0,
+    "matched_candidate_kind": "label",
+    "recoveries_applied": [],
+    "duration_ms": 351,
+    "fingerprint": "283fe66fc53ac71f"
+   },
+   {
+    "step_id": "login_submit",
+    "status": "ok",
+    "matched_candidate_rank": 0,
+    "matched_candidate_kind": "role_name",
+    "recoveries_applied": [],
+    "duration_ms": 1087,
+    "fingerprint": "283fe66fc53ac71f"
+   },
+   {
+    "step_id": "sign_on",
+    "status": "ok",
+    "matched_candidate_rank": null,
+    "matched_candidate_kind": null,
+    "recoveries_applied": [],
+    "duration_ms": 3281,
+    "fingerprint": null
+   },
+   {
+    "step_id": "type_member_number_textbox",
+    "status": "ok",
+    "matched_candidate_rank": 0,
+    "matched_candidate_kind": "label",
+    "recoveries_applied": [],
+    "duration_ms": 175,
+    "fingerprint": "e97c841901940c53"
+   },
+   {
+    "step_id": "click_search_button",
+    "status": "ok",
+    "matched_candidate_rank": 0,
+    "matched_candidate_kind": "role_name",
+    "recoveries_applied": [],
+    "duration_ms": 1076,
+    "fingerprint": "e97c841901940c53"
+   },
+   {
+    "step_id": "read_savings_balance",
+    "status": "ok",
+    "matched_candidate_rank": 0,
+    "matched_candidate_kind": "text_anchor",
+    "recoveries_applied": [],
+    "duration_ms": 183,
+    "fingerprint": "8856f116fb270e17"
+   }
+  ],
+  "interventions": [],
+  "drift": {
+   "fallback_steps": [],
+   "fingerprint_changes": []
+  },
+  "evidence_dir": "evidence/runs/replay-0b683ecc08a5",
+  "status": "success",
+  "outputs": {
+   "savings_balance": "9870.12"
+  }
+ },
+ "business_outcome": {
+  "run_id": "replay-6c8720c5f346",
+  "capability_id": "coreone.member_balance",
+  "capability_version": "1.0.0",
+  "tenant_id": null,
+  "started_at": "2026-09-28T17:50:32.760664Z",
+  "finished_at": "2026-09-28T17:50:37.125577Z",
+  "steps": [
+   {
+    "step_id": "login_open",
+    "status": "ok",
+    "matched_candidate_rank": null,
+    "matched_candidate_kind": null,
+    "recoveries_applied": [],
+    "duration_ms": 1350,
+    "fingerprint": "e3b0c44298fc1c14"
+   },
+   {
+    "step_id": "login_user",
+    "status": "ok",
+    "matched_candidate_rank": 0,
+    "matched_candidate_kind": "label",
+    "recoveries_applied": [],
+    "duration_ms": 182,
+    "fingerprint": "283fe66fc53ac71f"
+   },
+   {
+    "step_id": "login_password",
+    "status": "ok",
+    "matched_candidate_rank": 0,
+    "matched_candidate_kind": "label",
+    "recoveries_applied": [],
+    "duration_ms": 347,
+    "fingerprint": "283fe66fc53ac71f"
+   },
+   {
+    "step_id": "login_submit",
+    "status": "ok",
+    "matched_candidate_rank": 0,
+    "matched_candidate_kind": "role_name",
+    "recoveries_applied": [],
+    "duration_ms": 1069,
+    "fingerprint": "283fe66fc53ac71f"
+   },
+   {
+    "step_id": "sign_on",
+    "status": "ok",
+    "matched_candidate_rank": null,
+    "matched_candidate_kind": null,
+    "recoveries_applied": [],
+    "duration_ms": 3149,
+    "fingerprint": null
+   },
+   {
+    "step_id": "type_member_number_textbox",
+    "status": "ok",
+    "matched_candidate_rank": 0,
+    "matched_candidate_kind": "label",
+    "recoveries_applied": [],
+    "duration_ms": 175,
+    "fingerprint": "e97c841901940c53"
+   },
+   {
+    "step_id": "click_search_button",
+    "status": "ok",
+    "matched_candidate_rank": 0,
+    "matched_candidate_kind": "role_name",
+    "recoveries_applied": [],
+    "duration_ms": 1039,
+    "fingerprint": "e97c841901940c53"
+   }
+  ],
+  "interventions": [],
+  "drift": {
+   "fallback_steps": [],
+   "fingerprint_changes": []
+  },
+  "evidence_dir": "evidence/runs/replay-6c8720c5f346",
+  "status": "business_outcome",
+  "code": "MEMBER_NOT_FOUND",
+  "message": "No member found for number 99999.",
+  "at_step": "click_search_button"
+ },
+ "failed": {
+  "run_id": "replay-336aef34b540",
+  "capability_id": "coreone.member_balance",
+  "capability_version": "1.0.0",
+  "tenant_id": null,
+  "started_at": "2026-09-28T17:51:28.566766Z",
+  "finished_at": "2026-09-28T17:51:34.229428Z",
+  "steps": [
+   {
+    "step_id": "login_open",
+    "status": "ok",
+    "matched_candidate_rank": null,
+    "matched_candidate_kind": null,
+    "recoveries_applied": [],
+    "duration_ms": 1396,
+    "fingerprint": "e3b0c44298fc1c14"
+   },
+   {
+    "step_id": "login_user",
+    "status": "ok",
+    "matched_candidate_rank": 0,
+    "matched_candidate_kind": "label",
+    "recoveries_applied": [],
+    "duration_ms": 197,
+    "fingerprint": "283fe66fc53ac71f"
+   },
+   {
+    "step_id": "login_password",
+    "status": "ok",
+    "matched_candidate_rank": 0,
+    "matched_candidate_kind": "label",
+    "recoveries_applied": [],
+    "duration_ms": 357,
+    "fingerprint": "283fe66fc53ac71f"
+   },
+   {
+    "step_id": "login_open",
+    "status": "ok",
+    "matched_candidate_rank": null,
+    "matched_candidate_kind": null,
+    "recoveries_applied": [],
+    "duration_ms": 882,
+    "fingerprint": "e96313ef3d3c0d95"
+   },
+   {
+    "step_id": "login_user",
+    "status": "ok",
+    "matched_candidate_rank": 0,
+    "matched_candidate_kind": "label",
+    "recoveries_applied": [],
+    "duration_ms": 174,
+    "fingerprint": "283fe66fc53ac71f"
+   },
+   {
+    "step_id": "login_password",
+    "status": "ok",
+    "matched_candidate_rank": 0,
+    "matched_candidate_kind": "label",
+    "recoveries_applied": [],
+    "duration_ms": 336,
+    "fingerprint": "283fe66fc53ac71f"
+   },
+   {
+    "step_id": "login_submit",
+    "status": "ok",
+    "matched_candidate_rank": 0,
+    "matched_candidate_kind": "role_name",
+    "recoveries_applied": [],
+    "duration_ms": 1071,
+    "fingerprint": "283fe66fc53ac71f"
+   },
+   {
+    "step_id": "login_submit",
+    "status": "recovered",
+    "matched_candidate_rank": 0,
+    "matched_candidate_kind": "role_name",
+    "recoveries_applied": [
+     "transient_app_error"
+    ],
+    "duration_ms": 3539,
+    "fingerprint": "283fe66fc53ac71f"
+   },
+   {
+    "step_id": "sign_on",
+    "status": "ok",
+    "matched_candidate_rank": null,
+    "matched_candidate_kind": null,
+    "recoveries_applied": [],
+    "duration_ms": 5492,
+    "fingerprint": null
+   },
+   {
+    "step_id": "login_open",
+    "status": "failed",
+    "matched_candidate_rank": null,
+    "matched_candidate_kind": null,
+    "recoveries_applied": [],
+    "duration_ms": 169,
+    "fingerprint": null
+   },
+   {
+    "step_id": "sign_on",
+    "status": "failed",
+    "matched_candidate_rank": null,
+    "matched_candidate_kind": null,
+    "recoveries_applied": [],
+    "duration_ms": 169,
+    "fingerprint": null
+   }
+  ],
+  "interventions": [],
+  "drift": {
+   "fallback_steps": [],
+   "fingerprint_changes": []
+  },
+  "evidence_dir": "evidence/runs/replay-336aef34b540",
+  "status": "failed",
+  "failure": {
+   "code": "recovery_exhausted",
+   "step_id": "login_open",
+   "message": "recovery 'transient_app_error' matched again after 1 application(s); the interruption did not clear",
+   "expected": "'transient_app_error' needed at most 1 time(s): Generic internal error page. The page stays until something navigates, so waiting alone cannot clear it; sign on again and re-run the flow from the start, once. A second occurrence is a hard failure.",
+   "observed": "match #2; location 'http://127.0.0.1:8700/t/lakeside/main'; title 'Lakeside Community CU - CoreOne Member Services'; visible text []",
+   "evidence": [
+    "snapshots/112-failure-login_open.json",
+    "screenshots/113-failure-login_open.png"
+   ]
+  }
+ },
+ "escalated": {
+  "run_id": "replay-d6c721fe95a6",
+  "capability_id": "coreone.member_balance",
+  "capability_version": "1.0.0",
+  "tenant_id": null,
+  "started_at": "2026-09-28T17:53:25.536454Z",
+  "finished_at": "2026-09-28T17:53:28.628781Z",
+  "steps": [
+   {
+    "step_id": "login_open",
+    "status": "ok",
+    "matched_candidate_rank": null,
+    "matched_candidate_kind": null,
+    "recoveries_applied": [],
+    "duration_ms": 1383,
+    "fingerprint": "e3b0c44298fc1c14"
+   },
+   {
+    "step_id": "login_user",
+    "status": "ok",
+    "matched_candidate_rank": 0,
+    "matched_candidate_kind": "label",
+    "recoveries_applied": [],
+    "duration_ms": 219,
+    "fingerprint": "283fe66fc53ac71f"
+   },
+   {
+    "step_id": "login_password",
+    "status": "ok",
+    "matched_candidate_rank": 0,
+    "matched_candidate_kind": "label",
+    "recoveries_applied": [],
+    "duration_ms": 338,
+    "fingerprint": "283fe66fc53ac71f"
+   },
+   {
+    "step_id": "login_submit",
+    "status": "failed",
+    "matched_candidate_rank": 0,
+    "matched_candidate_kind": "role_name",
+    "recoveries_applied": [
+     "identity_verification"
+    ],
+    "duration_ms": 1149,
+    "fingerprint": "283fe66fc53ac71f"
+   },
+   {
+    "step_id": "sign_on",
+    "status": "failed",
+    "matched_candidate_rank": null,
+    "matched_candidate_kind": null,
+    "recoveries_applied": [],
+    "duration_ms": 3091,
+    "fingerprint": null
+   }
+  ],
+  "interventions": [
+   "replay-d6c721fe95a6-intervention-1"
+  ],
+  "drift": {
+   "fallback_steps": [],
+   "fingerprint_changes": []
+  },
+  "evidence_dir": "evidence/runs/replay-d6c721fe95a6",
+  "status": "escalated",
+  "intervention_id": "replay-d6c721fe95a6-intervention-1",
+  "reason": "Member identity verification requires a human operator.",
+  "operator_note": "scripted operator chose abort"
+ },
+ "invalid_input": {
+  "run_id": "replay-b8778fce0c2d",
+  "capability_id": "coreone.member_balance",
+  "capability_version": "1.0.0",
+  "tenant_id": null,
+  "started_at": "2026-09-28T17:50:43.070909Z",
+  "finished_at": "2026-09-28T17:50:43.071085Z",
+  "steps": [],
+  "interventions": [],
+  "drift": {
+   "fallback_steps": [],
+   "fingerprint_changes": []
+  },
+  "evidence_dir": "evidence/runs/replay-b8778fce0c2d",
+  "status": "failed",
+  "failure": {
+   "code": "invalid_input",
+   "step_id": null,
+   "message": "input 'member_number' does not match the required pattern '^\\\\d+$'",
+   "expected": "^\\d+$",
+   "observed": "'abc'",
+   "evidence": []
+  }
+ },
+ "human_resume": {
+  "run_id": "replay-b8fd4634c051",
+  "capability_id": "coreone.member_balance",
+  "capability_version": "1.0.0",
+  "tenant_id": null,
+  "started_at": "2026-09-28T17:51:58.918108Z",
+  "finished_at": "2026-09-28T17:53:07.305530Z",
+  "steps": [
+   {
+    "step_id": "login_open",
+    "status": "ok",
+    "matched_candidate_rank": null,
+    "matched_candidate_kind": null,
+    "recoveries_applied": [],
+    "duration_ms": 1372,
+    "fingerprint": "e3b0c44298fc1c14"
+   },
+   {
+    "step_id": "login_user",
+    "status": "ok",
+    "matched_candidate_rank": 0,
+    "matched_candidate_kind": "label",
+    "recoveries_applied": [],
+    "duration_ms": 220,
+    "fingerprint": "283fe66fc53ac71f"
+   },
+   {
+    "step_id": "login_password",
+    "status": "ok",
+    "matched_candidate_rank": 0,
+    "matched_candidate_kind": "label",
+    "recoveries_applied": [],
+    "duration_ms": 334,
+    "fingerprint": "283fe66fc53ac71f"
+   },
+   {
+    "step_id": "login_submit",
+    "status": "human",
+    "matched_candidate_rank": 0,
+    "matched_candidate_kind": "role_name",
+    "recoveries_applied": [
+     "identity_verification"
+    ],
+    "duration_ms": 64492,
+    "fingerprint": "283fe66fc53ac71f"
+   },
+   {
+    "step_id": "sign_on",
+    "status": "ok",
+    "matched_candidate_rank": null,
+    "matched_candidate_kind": null,
+    "recoveries_applied": [],
+    "duration_ms": 66602,
+    "fingerprint": null
+   },
+   {
+    "step_id": "type_member_number_textbox",
+    "status": "ok",
+    "matched_candidate_rank": 0,
+    "matched_candidate_kind": "label",
+    "recoveries_applied": [],
+    "duration_ms": 228,
+    "fingerprint": "e97c841901940c53"
+   },
+   {
+    "step_id": "click_search_button",
+    "status": "ok",
+    "matched_candidate_rank": 0,
+    "matched_candidate_kind": "role_name",
+    "recoveries_applied": [],
+    "duration_ms": 1188,
+    "fingerprint": "e97c841901940c53"
+   },
+   {
+    "step_id": "read_savings_balance",
+    "status": "ok",
+    "matched_candidate_rank": 0,
+    "matched_candidate_kind": "text_anchor",
+    "recoveries_applied": [],
+    "duration_ms": 182,
+    "fingerprint": "b1f3fbf77108d60f"
+   }
+  ],
+  "interventions": [
+   "replay-b8fd4634c051-intervention-1"
+  ],
+  "drift": {
+   "fallback_steps": [],
+   "fingerprint_changes": []
+  },
+  "evidence_dir": "evidence/runs/replay-b8fd4634c051",
+  "status": "success",
+  "outputs": {
+   "savings_balance": "1250.00"
+  }
+ },
+ "discovery": {
+  "mode": "discovery",
+  "run_id": "disc-dd983ef8fe94",
+  "planner": "anthropic",
+  "model": "claude-sonnet-5-5",
+  "status": "completed",
+  "reason": "Savings balance already extracted.",
+  "steps": 7,
+  "planner_calls": 7,
+  "invalid_decisions": 0,
+  "extracted": {
+   "savings_balance": "1,250.00"
+  },
+  "capability": "coreone.member_balance@1.0.0",
+  "record_error": null,
+  "record_warnings": [],
+  "evidence_dir": "evidence/runs/disc-dd983ef8fe94",
+  "artifact_path": "/private/tmp/claude-501/-Users-rathinaboopathi-Desktop-SRB/b5c746de-b23a-44d9-982c-ea62bea15219/scratchpad/prod_artifacts/coreone.member_balance/1.0.0.json"
+ }
+}

@@ -1,0 +1,118 @@
+/*
+ * Design tokens. Components use only these variables. The light palette is complete on :root;
+ * dark is defined twice: for system dark (unless the user forced light) and for an explicit toggle.
+ * Neutrals are slightly warm with a blue bias toward the ink accent. State colours are semantic
+ * and never used as decoration: success green, business outcome teal (an answer, not an error),
+ * escalated violet, failed red, needs-operator amber, running = accent.
+ */
+:root {
+  color-scheme: light;
+  --font-sans: 'IBM Plex Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+
+  --bg: #f4f4f1;
+  --surface: #ffffff;
+  --surface-2: #f9f9f7;
+  --surface-sunken: #efefeb;
+  --border: #e0e0da;
+  --border-strong: #c9c9c1;
+  --text: #1a1c20;
+  --text-muted: #555a62;
+  --text-faint: #686d75;
+
+  --accent: #23498a;
+  --accent-strong: #1a3a72;
+  --accent-soft: #e6ecf6;
+  --accent-contrast: #ffffff;
+  --focus: #2f62c2;
+
+  --success: #1d6b3a;
+  --success-soft: #e3f1e7;
+  --outcome: #0b6670;
+  --outcome-soft: #e0f0f1;
+  --escalated: #6542a8;
+  --escalated-soft: #efe9f8;
+  --failed: #b42318;
+  --failed-soft: #fbe9e7;
+  --attention: #8a5300;
+  --attention-soft: #fbf0dc;
+  --running: var(--accent);
+  --running-soft: var(--accent-soft);
+  --neutral: #555a62;
+  --neutral-soft: #ececE7;
+
+  --shadow: 0 1px 2px rgb(20 24 32 / 6%), 0 1px 1px rgb(20 24 32 / 4%);
+  --radius: 6px;
+  --radius-sm: 4px;
+  --nav-width: 220px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    color-scheme: dark;
+    --bg: #121417;
+    --surface: #1a1d21;
+    --surface-2: #1f2227;
+    --surface-sunken: #15171a;
+    --border: #2c3036;
+    --border-strong: #3b4048;
+    --text: #e6e7e9;
+    --text-muted: #a9aeb6;
+    --text-faint: #9197a0;
+
+    --accent: #8fb0ef;
+    --accent-strong: #b3caf5;
+    --accent-soft: #1f2b40;
+    --accent-contrast: #0e1522;
+    --focus: #9dbcf5;
+
+    --success: #6fcf8f;
+    --success-soft: #16291d;
+    --outcome: #5ec8d1;
+    --outcome-soft: #11282b;
+    --escalated: #b9a1ec;
+    --escalated-soft: #251f36;
+    --failed: #f19a8f;
+    --failed-soft: #341a18;
+    --attention: #f0b75c;
+    --attention-soft: #33270f;
+    --neutral: #a9aeb6;
+    --neutral-soft: #24272c;
+
+    --shadow: 0 1px 2px rgb(0 0 0 / 40%);
+  }
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --bg: #121417;
+  --surface: #1a1d21;
+  --surface-2: #1f2227;
+  --surface-sunken: #15171a;
+  --border: #2c3036;
+  --border-strong: #3b4048;
+  --text: #e6e7e9;
+  --text-muted: #a9aeb6;
+  --text-faint: #9197a0;
+
+  --accent: #8fb0ef;
+  --accent-strong: #b3caf5;
+  --accent-soft: #1f2b40;
+  --accent-contrast: #0e1522;
+  --focus: #9dbcf5;
+
+  --success: #6fcf8f;
+  --success-soft: #16291d;
+  --outcome: #5ec8d1;
+  --outcome-soft: #11282b;
+  --escalated: #b9a1ec;
+  --escalated-soft: #251f36;
+  --failed: #f19a8f;
+  --failed-soft: #341a18;
+  --attention: #f0b75c;
+  --attention-soft: #33270f;
+  --neutral: #a9aeb6;
+  --neutral-soft: #24272c;
+
+  --shadow: 0 1px 2px rgb(0 0 0 / 40%);
+}
