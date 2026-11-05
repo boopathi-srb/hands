@@ -114,3 +114,26 @@ def test_seed_reports_copy_failure(tmp_path: Path) -> None:
     blocker.write_text("a file where the directory should go")
     result = seed_artifacts(seed, blocker)
     assert result.status == "failed" and result.message
+
+
+def test_fresh_data_dir_is_seeded_with_recorded_runs(tmp_path: Path) -> None:
+    """A new volume starts with the repo's evidence runs so the deployed UI shows real history."""
+    from .helpers import build_app, fake_settings
+
+    repo = tmp_path / "repo"
+    (repo / "artifacts" / "cap.one").mkdir(parents=True)
+    (repo / "evidence" / "runs" / "replay-aa").mkdir(parents=True)
+    (repo / "evidence" / "runs" / "replay-aa" / "result.json").write_text("{}")
+    settings = fake_settings(tmp_path / "data", repo_root=repo)
+    build_app(settings)
+    assert (tmp_path / "data" / "runs" / "replay-aa" / "result.json").is_file()
+
+
+def test_seeding_skips_when_repo_has_no_runs(tmp_path: Path) -> None:
+    from .helpers import build_app, fake_settings
+
+    repo = tmp_path / "repo"
+    (repo / "artifacts" / "cap.one").mkdir(parents=True)
+    settings = fake_settings(tmp_path / "data", repo_root=repo)
+    build_app(settings)
+    assert not (tmp_path / "data" / "runs").exists() or not any((tmp_path / "data" / "runs").iterdir())

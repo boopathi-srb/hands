@@ -60,6 +60,11 @@ class ApiSettings:
         return self.repo_root / "artifacts"
 
     @property
+    def seed_runs_dir(self) -> Path:
+        """Recorded evidence runs shipped with the repo, copied into an empty evidence root."""
+        return self.repo_root / "evidence" / "runs"
+
+    @property
     def policy_path(self) -> Path:
         return self.repo_root / "policies" / "coreone.yaml"
 

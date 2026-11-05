@@ -1,0 +1,15 @@
+.venv
+.git
+**/__pycache__
+.pytest_cache
+.ruff_cache
+.mypy_cache
+.env
+runs
+evidence/*
+!evidence/runs
+cassettes
+tests
+web/node_modules
+web/dist
+*.zip

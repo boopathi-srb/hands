@@ -6,6 +6,7 @@ import logging
 from collections.abc import AsyncIterator, Callable
 from contextlib import AbstractAsyncContextManager, asynccontextmanager
 from dataclasses import dataclass
+from pathlib import Path
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -53,10 +54,17 @@ def create_api_app(settings: ApiSettings | None = None, dependencies: ApiDepende
 
 
 def _seed_data_dir(settings: ApiSettings) -> None:
-    seeded = seed_artifacts(settings.seed_artifacts_dir, settings.artifacts_dir)
+    """A fresh volume starts with the repo's capabilities and its recorded evidence runs."""
+    _seed_one(settings.seed_artifacts_dir, settings.artifacts_dir, "artifact")
+    if settings.seed_runs_dir.is_dir():
+        _seed_one(settings.seed_runs_dir, settings.evidence_root, "evidence run")
+
+
+def _seed_one(seed_dir: Path, target_dir: Path, what: str) -> None:
+    seeded = seed_artifacts(seed_dir, target_dir)
     if seeded.status == "failed":
-        log_failure(_logger, "create_api_app", f"artifact seeding failed: {seeded.message}",
-                    artifacts_dir=str(settings.artifacts_dir))
+        log_failure(_logger, "create_api_app", f"{what} seeding failed: {seeded.message}",
+                    target_dir=str(target_dir))
 
 
 def _console_app(shared_console: SharedConsole) -> FastAPI:
