@@ -9,6 +9,25 @@ with no model in the loop, and gets back a typed result: success with outputs, a
 - Evidence of real runs: [evidence/](evidence/README.md)
 - Build plan and phase history: [PLAN.md](PLAN.md)
 
+## Quick start: the web UI
+
+```bash
+uv sync --extra dev && uv run playwright install chromium
+```
+
+```bash
+cd web && npm install && npm run build && cd ..
+```
+
+```bash
+uv run hands serve --port 8080
+```
+
+Open http://127.0.0.1:8080. `hands serve` starts the API, the operator console, the CoreOne mock app and the UI in
+one process. From the UI you can browse capabilities, replay one with any input or injected fault, run a discovery,
+watch a run live, and take over a paused run from the operator view. Deployment: [docs/DEPLOY.md](docs/DEPLOY.md).
+API contract: [docs/API.md](docs/API.md).
+
 ## Setup
 
 Requirements: macOS or Linux, Python 3.11, [uv](https://docs.astral.sh/uv/).
